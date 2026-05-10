@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>「糧」心大數據</title>
+    <title>「糧」心大數據 - ESG Impact</title>
     <style>
         :root {
             --bg-color: #f8f9f2;
@@ -24,26 +24,82 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.7;
+            padding-top: 20px; /* 移除導覽列後加一點頂部間距 */
         }
 
-        /* 內容區塊通用樣式 */
-        section {
-            padding: 60px 25px;
+        /* 內容區塊控制 */
+        .page-content {
+            display: none;
+            padding: 40px 25px;
             max-width: 1100px;
             margin: 0 auto;
+            min-height: 75vh;
+        }
+        .page-content.active { display: block; }
+
+        /* 返回按鈕 (用於從計算機或地圖回到首頁) */
+        .btn-back {
+            background: none;
+            border: 1.5px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background: var(--primary-color);
+            color: white;
         }
 
-        /* 標題與資訊展示 */
-        .info-container { margin-top: 40px; }
+        /* 首頁資訊樣式 */
         .news-placeholder {
             background: var(--white);
             border-radius: 15px;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
             color: #999;
             border: 2px dashed #e0e0e0;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
+
+        /* 功能引導按鈕 */
+        .cta-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .btn-cta {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(140, 156, 117, 0.2);
+        }
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(140, 156, 117, 0.4);
+            filter: brightness(1.05);
+        }
+        .btn-cta.secondary {
+            background-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2);
+        }
+        .btn-cta.secondary:hover {
+            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.4);
+        }
+        .btn-cta .icon { margin-right: 10px; font-size: 1.3rem; }
 
         /* 計算機樣式 */
         .calc-wrapper {
@@ -53,7 +109,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .calc-form { padding: 40px; }
         .calc-visual { background-color: #f1f3e8; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
@@ -62,7 +118,7 @@
         .input-group label { display: block; margin-bottom: 8px; font-weight: 600; }
         input[type="number"], select { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 8px; outline: none; }
         .slider { width: 100%; accent-color: var(--primary-color); }
-        .btn-calc { background-color: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600; font-size: 1rem; }
+        .btn-calc { background-color: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600; }
 
         .formula-box {
             background: #fdfdfd;
@@ -71,10 +127,9 @@
             margin-top: 20px;
             font-size: 0.9rem;
             display: none;
-            text-align: left;
         }
 
-        /* 天平動畫視覺 */
+        /* 天平動畫 */
         .balance-icon {
             width: 150px;
             height: 100px;
@@ -85,80 +140,93 @@
         }
         .balance-icon::after {
             content: "";
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            width: 4px;
-            height: 60px;
+            position: absolute; left: 50%; bottom: 0;
+            width: 4px; height: 60px;
             background: var(--primary-color);
             transform: translateX(-2px);
         }
 
-        /* 地圖佔位 */
-        .map-placeholder {
-            height: 450px;
-            background-color: #e3eaf0;
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #666;
-            border: 2px solid #d1d9e0;
-            margin-top: 20px;
-        }
-
-        /* 微型連署區 - 置底樣式 */
+        /* 連署區塊 */
         .petition-section {
             text-align: center;
-            padding: 80px 25px;
-            background: var(--white);
-            margin-top: 60px;
-            border-top: 1px solid #eee;
+            padding: 60px 0;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            margin-top: 50px;
         }
         .btn-promise {
-            margin-top: 25px;
-            padding: 20px 80px;
+            margin-top: 20px; padding: 18px 60px;
             background: var(--white);
             border: 3px solid var(--accent-color);
             color: var(--accent-color);
             cursor: pointer;
             box-shadow: 10px 10px 0px var(--accent-color);
             transition: 0.1s;
-            font-weight: 800;
-            font-size: 1.6rem;
+            font-weight: 800; font-size: 1.5rem;
         }
         .btn-promise:active { transform: translate(5px, 5px); box-shadow: 5px 5px 0px var(--accent-color); }
-        .count-num { color: var(--accent-color); font-weight: 900; font-size: 2rem; margin: 0 5px; }
+        .count-num { color: var(--accent-color); font-weight: 900; font-size: 1.8rem; margin: 0 5px; }
 
-        footer { text-align: center; padding: 40px; font-size: 0.85rem; color: #aaa; background: var(--white); }
+        /* 地圖佔位 */
+        .map-placeholder {
+            height: 500px;
+            background-color: #e3eaf0;
+            border-radius: 20px;
+            display: flex; justify-content: center; align-items: center;
+            color: #666; border: 2px solid #d1d9e0;
+        }
+
+        footer { text-align: center; padding: 40px; font-size: 0.85rem; color: #aaa; }
 
         @media (max-width: 850px) {
             .calc-wrapper { grid-template-columns: 1fr; }
+            .cta-container { flex-direction: column; align-items: center; }
+            .btn-cta { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <section id="home">
+    <!-- 首頁 -->
+    <section id="home" class="page-content active">
         <div class="info-container">
-            <h1 style="text-align:center; color: var(--primary-color); font-size: 2.2rem; margin-bottom:10px;">飢餓觀察站</h1>
-            <p style="text-align:center; color: #888; margin-bottom:40px;">追蹤全球糧食議題，將剩食轉化為守護的力量</p>
+            <h1 style="text-align:center; color: var(--primary-color); margin-bottom:10px;">ESG Impact</h1>
+            <h2 style="text-align:center; color: #777; margin-bottom:30px; font-weight: 400;">飢餓觀察站</h2>
+            
             <div class="news-placeholder">
                 <h3>[ 此處將會放置 ESG 新聞、文章或專案介紹 ]</h3>
+            </div>
+
+            <div class="cta-container">
+                <button class="btn-cta" onclick="showPage('calculator')">
+                    <span class="icon">⚖️</span> 剩食計算機
+                </button>
+                <button class="btn-cta secondary" onclick="showPage('map')">
+                    <span class="icon">🌍</span> 全球飢餓地圖
+                </button>
+            </div>
+        </div>
+
+        <div class="petition-section">
+            <h2>微型連署</h2>
+            <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
+            <button class="btn-promise" onclick="incrementCounter()">我承諾</button>
+            <div class="counter-container" style="margin-top:20px;">
+                目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
             </div>
         </div>
     </section>
 
-    <section id="calculator">
-        <h2 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">剩食計算機</h2>
-        
+    <!-- 計算機頁面 -->
+    <section id="calculator" class="page-content">
+        <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
+        <h1 style="text-align:center; color: var(--primary-color); margin-bottom:20px;">剩食計算機</h1>
         <div class="calc-wrapper">
             <div class="calc-form">
                 <h3 style="margin-bottom:10px;">數據輸入</h3>
-                <p style="font-size:0.9rem; color:#666; margin-bottom:25px;">請輸入您的剩食數據，我們將為您換算出對應的熱量損失。</p>
-                
                 <div class="input-group">
-                    <label>1. 食物類別 (平均熱量密度)</label>
+                    <label>1. 食物類別</label>
                     <select id="food-type">
                         <option value="0">請選擇類別...</option>
                         <option value="1.3">米飯/麵食 (1.3 kcal/g)</option>
@@ -166,61 +234,44 @@
                         <option value="0.4">蔬菜 (0.4 kcal/g)</option>
                         <option value="0.6">水果 (0.6 kcal/g)</option>
                         <option value="3.5">速食/油炸物 (3.5 kcal/g)</option>
-                        <option value="2.8">甜點/糕點 (2.8 kcal/g)</option>
                     </select>
                 </div>
-
                 <div class="input-group">
-                    <label>2. 浪費份量比例 (<span id="ratio-text">50</span>%)</label>
+                    <label>2. 浪費比例 (<span id="ratio-text">50</span>%)</label>
                     <input type="range" id="waste-ratio" min="0" max="100" value="50" class="slider" oninput="updateRatio(this.value)">
                 </div>
-
                 <div class="input-group">
                     <label>3. 平均一餐總重 (g)</label>
-                    <input type="number" id="food-weight" placeholder="不可輸入負數，例如：500" min="0">
+                    <input type="number" id="food-weight" placeholder="例如：500" min="0">
                 </div>
-
-                <button class="btn-calc" onclick="runCalc()">立即計算過程與結果</button>
-
+                <button class="btn-calc" onclick="runCalc()">立即計算</button>
                 <div id="formula-display" class="formula-box">
                     <strong>計算過程：</strong><br>
                     <span id="process-text"></span>
                 </div>
             </div>
-
             <div class="calc-visual">
                 <div class="balance-icon" id="balance-img"></div>
-                <div id="result-msg" style="font-weight:600; color:var(--primary-color); padding: 0 10px;">
-                    計算後，天平將根據浪費比例傾斜
+                <div id="result-msg" style="font-weight:600; color:var(--primary-color);">
+                    請輸入數據並點擊計算
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="map">
-        <h2 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">全球飢餓狀況地圖</h2>
+    <!-- 地圖頁面 -->
+    <section id="map" class="page-content">
+        <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
+        <h1 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">全球飢餓狀況地圖</h1>
         <div class="map-placeholder">
             <p>🌍 [ 世界地圖展示空間 ]</p>
         </div>
     </section>
 
-    <section class="petition-section">
-        <h2 style="font-size: 2rem; color: var(--primary-color);">微型連署</h2>
-        <p style="margin-top: 15px; color: #666; font-size: 1.1rem;">
-            您的每一次點擊，都是填滿空碗的一份希望。<br>讓溫暖傳遞到需要的餐桌上。
-        </p>
-        <button class="btn-promise" onclick="incrementCounter()">我承諾</button>
-        <div class="counter-container" style="margin-top:30px; font-size: 1.2rem;">
-            目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2026 「糧」心大數據 - ESG Sustainable Future Project
-    </footer>
+    <footer>&copy; 2026 ESG Sustainable Future Project</footer>
 
     <script>
-        // --- 1. 連署邏輯 (localStorage 永久保存) ---
+        // --- 連署邏輯 ---
         let pledgeCount = localStorage.getItem('pledge_total') ? parseInt(localStorage.getItem('pledge_total')) : 0;
         document.getElementById('count').innerText = pledgeCount.toLocaleString();
 
@@ -230,7 +281,19 @@
             localStorage.setItem('pledge_total', pledgeCount);
         }
 
-        // --- 2. 計算機邏輯 ---
+        // --- 頁面切換邏輯 (移除導覽列選取邏輯) ---
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(p => p.style.display = 'none');
+
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+            }
+            window.scrollTo(0, 0);
+        }
+
+        // --- 計算機邏輯 ---
         function updateRatio(val) {
             document.getElementById('ratio-text').innerText = val;
         }
@@ -240,38 +303,24 @@
             const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
             let weight = parseFloat(document.getElementById('food-weight').value);
 
-            // 檢查類別與負數
-            if (density === 0) {
-                alert("請先選擇食物類別！");
-                return;
-            }
-            if (isNaN(weight) || weight < 0) {
-                alert("錯誤：平均一餐總重不可為負數！");
-                document.getElementById('food-weight').value = 0;
+            if (density === 0 || isNaN(weight) || weight < 0) {
+                alert("請填寫正確的數據！");
                 return;
             }
 
-            // 計算結果
             const kcalWasted = (weight * ratio * density).toFixed(1);
-            const typeLabel = document.getElementById('food-type').options[document.getElementById('food-type').selectedIndex].text.split(' ')[0];
-
-            // 顯示過程
-            const formulaBox = document.getElementById('formula-display');
-            formulaBox.style.display = 'block';
+            document.getElementById('formula-display').style.display = 'block';
             document.getElementById('process-text').innerHTML = 
-                `1. 浪費重量：${weight}g × ${(ratio*100).toFixed(0)}% = ${(weight * ratio).toFixed(1)}g<br>` +
-                `2. 熱量轉換：${(weight * ratio).toFixed(1)}g × ${density} kcal/g (${typeLabel})<br>` +
                 `總計浪費：<strong>${kcalWasted} kcal</strong>`;
 
-            // 天平動畫傾斜
             const balance = document.getElementById('balance-img');
-            const angle = (ratio * 40) - 20; 
-            balance.style.transform = `rotate(${angle}deg)`;
+            balance.style.transform = `rotate(${(ratio * 40) - 20}deg)`;
 
-            // 文字結果
             document.getElementById('result-msg').innerHTML = 
-                `計算完成！<br>您本次共浪費了 <span style="font-size:1.5rem; color:#e67e22;">${kcalWasted}</span> 大卡`;
+                `浪費了 <span style="font-size:1.5rem; color:#e67e22;">${kcalWasted}</span> 大卡`;
         }
+
+        showPage('home');
     </script>
 </body>
 </html>
