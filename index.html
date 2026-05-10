@@ -9,6 +9,7 @@
             --bg-color: #f8f9f2;
             --primary-color: #8c9c75;
             --accent-color: #d4a373;
+            --quiz-color: #6b8e23;
             --text-color: #4a4a4a;
             --white: #ffffff;
         }
@@ -24,7 +25,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.7;
-            padding-top: 20px; /* 移除導覽列後加一點頂部間距 */
+            padding-top: 20px;
         }
 
         /* 內容區塊控制 */
@@ -37,7 +38,7 @@
         }
         .page-content.active { display: block; }
 
-        /* 返回按鈕 (用於從計算機或地圖回到首頁) */
+        /* 返回按鈕 */
         .btn-back {
             background: none;
             border: 1.5px solid var(--primary-color);
@@ -96,10 +97,10 @@
             background-color: var(--accent-color);
             box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2);
         }
-        .btn-cta.secondary:hover {
-            box-shadow: 0 6px 20px rgba(212, 163, 115, 0.4);
+        .btn-cta.quiz-theme {
+            background-color: var(--quiz-color);
+            box-shadow: 0 4px 15px rgba(107, 142, 35, 0.2);
         }
-        .btn-cta .icon { margin-right: 10px; font-size: 1.3rem; }
 
         /* 計算機樣式 */
         .calc-wrapper {
@@ -109,70 +110,72 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            margin-top: 10px;
         }
         .calc-form { padding: 40px; }
         .calc-visual { background-color: #f1f3e8; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; margin-bottom: 8px; font-weight: 600; }
         input[type="number"], select { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 8px; outline: none; }
         .slider { width: 100%; accent-color: var(--primary-color); }
         .btn-calc { background-color: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600; }
+        .formula-box { background: #fdfdfd; border-left: 5px solid var(--accent-color); padding: 15px; margin-top: 20px; font-size: 0.9rem; display: none; }
 
-        .formula-box {
-            background: #fdfdfd;
-            border-left: 5px solid var(--accent-color);
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            display: none;
+        /* 惜食小學堂樣式 */
+        .quiz-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 650px;
+            margin: 20px auto;
         }
+        .quiz-card {
+            border: 2px solid #f1f3e8;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .quiz-question { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; color: var(--text-color); }
+        .quiz-options { display: flex; justify-content: center; gap: 20px; }
+        .btn-quiz { padding: 12px 40px; border-radius: 50px; border: none; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: 0.2s; }
+        .btn-true { background-color: var(--primary-color); color: white; }
+        .btn-false { background-color: var(--accent-color); color: white; }
+        .quiz-feedback { margin-top: 20px; padding: 15px; border-radius: 10px; display: none; line-height: 1.5; }
+        .quiz-feedback.success { background-color: #f1f3e8; color: #5d6b4a; border: 1px solid var(--primary-color); }
+        .quiz-feedback.error { background-color: #fff0f0; color: #a94442; border: 1px solid #ebccd1; }
 
         /* 天平動畫 */
         .balance-icon {
-            width: 150px;
-            height: 100px;
-            border-bottom: 4px solid var(--primary-color);
-            position: relative;
-            margin-bottom: 20px;
-            transition: transform 0.5s ease-in-out;
+            width: 150px; height: 100px; border-bottom: 4px solid var(--primary-color);
+            position: relative; margin-bottom: 20px; transition: transform 0.5s ease;
         }
         .balance-icon::after {
-            content: "";
-            position: absolute; left: 50%; bottom: 0;
-            width: 4px; height: 60px;
-            background: var(--primary-color);
-            transform: translateX(-2px);
+            content: ""; position: absolute; left: 50%; bottom: 0; width: 4px; height: 60px;
+            background: var(--primary-color); transform: translateX(-2px);
         }
 
         /* 連署區塊 */
         .petition-section {
-            text-align: center;
-            padding: 60px 0;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
-            margin-top: 50px;
+            text-align: center; padding: 60px 0; background: #fff; border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02); margin-top: 50px;
         }
         .btn-promise {
-            margin-top: 20px; padding: 18px 60px;
-            background: var(--white);
-            border: 3px solid var(--accent-color);
-            color: var(--accent-color);
-            cursor: pointer;
-            box-shadow: 10px 10px 0px var(--accent-color);
-            transition: 0.1s;
-            font-weight: 800; font-size: 1.5rem;
+            margin-top: 20px; padding: 18px 60px; background: var(--white);
+            border: 3px solid var(--accent-color); color: var(--accent-color);
+            cursor: pointer; box-shadow: 10px 10px 0px var(--accent-color);
+            transition: 0.1s; font-weight: 800; font-size: 1.5rem;
         }
         .btn-promise:active { transform: translate(5px, 5px); box-shadow: 5px 5px 0px var(--accent-color); }
         .count-num { color: var(--accent-color); font-weight: 900; font-size: 1.8rem; margin: 0 5px; }
 
         /* 地圖佔位 */
         .map-placeholder {
-            height: 500px;
-            background-color: #e3eaf0;
-            border-radius: 20px;
+            height: 500px; background-color: #e3eaf0; border-radius: 20px;
             display: flex; justify-content: center; align-items: center;
             color: #666; border: 2px solid #d1d9e0;
         }
@@ -201,6 +204,9 @@
             <div class="cta-container">
                 <button class="btn-cta" onclick="showPage('calculator')">
                     <span class="icon">⚖️</span> 剩食計算機
+                </button>
+                <button class="btn-cta quiz-theme" onclick="showPage('quiz')">
+                    <span class="icon">💡</span> 惜食小學堂
                 </button>
                 <button class="btn-cta secondary" onclick="showPage('map')">
                     <span class="icon">🌍</span> 全球飢餓地圖
@@ -246,16 +252,30 @@
                 </div>
                 <button class="btn-calc" onclick="runCalc()">立即計算</button>
                 <div id="formula-display" class="formula-box">
-                    <strong>計算過程：</strong><br>
                     <span id="process-text"></span>
                 </div>
             </div>
             <div class="calc-visual">
                 <div class="balance-icon" id="balance-img"></div>
-                <div id="result-msg" style="font-weight:600; color:var(--primary-color);">
-                    請輸入數據並點擊計算
+                <div id="result-msg" style="font-weight:600; color:var(--primary-color);">請點擊計算</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 惜食小學堂頁面 -->
+    <section id="quiz" class="page-content">
+        <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
+        <h1 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">惜食小學堂</h1>
+        <div class="quiz-container">
+            <div class="quiz-card">
+                <p class="quiz-question" id="question-text">載入中...</p>
+                <div class="quiz-options">
+                    <button class="btn-quiz btn-true" onclick="checkAnswer(true)">O 正確</button>
+                    <button class="btn-quiz btn-false" onclick="checkAnswer(false)">X 錯誤</button>
                 </div>
             </div>
+            <div id="quiz-feedback" class="quiz-feedback"></div>
+            <button class="btn-calc" style="margin-top:20px; display:none;" id="next-btn" onclick="nextQuestion()">下一題</button>
         </div>
     </section>
 
@@ -271,55 +291,71 @@
     <footer>&copy; 2026 ESG Sustainable Future Project</footer>
 
     <script>
+        // --- 通用頁面切換 ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
+            const target = document.getElementById(pageId);
+            if (target) target.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
         // --- 連署邏輯 ---
         let pledgeCount = localStorage.getItem('pledge_total') ? parseInt(localStorage.getItem('pledge_total')) : 0;
         document.getElementById('count').innerText = pledgeCount.toLocaleString();
-
         function incrementCounter() {
             pledgeCount++;
             document.getElementById('count').innerText = pledgeCount.toLocaleString();
             localStorage.setItem('pledge_total', pledgeCount);
         }
 
-        // --- 頁面切換邏輯 (移除導覽列選取邏輯) ---
-        function showPage(pageId) {
-            const pages = document.querySelectorAll('.page-content');
-            pages.forEach(p => p.style.display = 'none');
-
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-            }
-            window.scrollTo(0, 0);
-        }
-
         // --- 計算機邏輯 ---
-        function updateRatio(val) {
-            document.getElementById('ratio-text').innerText = val;
-        }
-
+        function updateRatio(val) { document.getElementById('ratio-text').innerText = val; }
         function runCalc() {
             const density = parseFloat(document.getElementById('food-type').value);
             const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
-            let weight = parseFloat(document.getElementById('food-weight').value);
-
-            if (density === 0 || isNaN(weight) || weight < 0) {
-                alert("請填寫正確的數據！");
-                return;
-            }
-
-            const kcalWasted = (weight * ratio * density).toFixed(1);
+            const weight = parseFloat(document.getElementById('food-weight').value);
+            if (density === 0 || isNaN(weight) || weight < 0) { alert("請輸入正確數據！"); return; }
+            const kcal = (weight * ratio * density).toFixed(1);
             document.getElementById('formula-display').style.display = 'block';
-            document.getElementById('process-text').innerHTML = 
-                `總計浪費：<strong>${kcalWasted} kcal</strong>`;
-
-            const balance = document.getElementById('balance-img');
-            balance.style.transform = `rotate(${(ratio * 40) - 20}deg)`;
-
-            document.getElementById('result-msg').innerHTML = 
-                `浪費了 <span style="font-size:1.5rem; color:#e67e22;">${kcalWasted}</span> 大卡`;
+            document.getElementById('process-text').innerHTML = `總計浪費熱量：<strong>${kcal} kcal</strong>`;
+            document.getElementById('balance-img').style.transform = `rotate(${(ratio * 40) - 20}deg)`;
+            document.getElementById('result-msg').innerHTML = `浪費了 <span style="font-size:1.4rem; color:#e67e22;">${kcal}</span> 大卡`;
         }
 
+        // --- 惜食小學堂邏輯 ---
+        const quizData = [
+            { q: "全球每年生產的食物中，大約有三分之一被浪費掉？", a: true, info: "正確！根據聯合國統計，全球每年浪費約 13 億噸食物。" },
+            { q: "把所有剩食丟進垃圾桶是最環保的處理方式？", a: false, info: "錯誤！剩食掩埋會產生甲烷，應優先減量或做成堆肥。" },
+            { q: "香蕉放在冰箱裡可以保存得更久且不會變黑？", a: false, info: "錯誤！香蕉是熱帶水果，進冰箱會受寒害導致果皮變黑。" },
+            { q: "「醜蔬果」雖然外型不佳，但營養價值與普通蔬果相同？", a: true, info: "正確！選擇醜蔬果能有效減少農業資源浪費。" }
+        ];
+        let currentQuizIndex = 0;
+        function loadQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+        function checkAnswer(userAns) {
+            const q = quizData[currentQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.style.display = 'block';
+            if (userAns === q.a) {
+                feedback.innerHTML = `<strong>太棒了！答對了！</strong><br>${q.info}`;
+                feedback.className = "quiz-feedback success";
+            } else {
+                feedback.innerHTML = `<strong>答錯囉，再接再厲！</strong><br>${q.info}`;
+                feedback.className = "quiz-feedback error";
+            }
+            document.getElementById('next-btn').style.display = 'inline-block';
+        }
+        function nextQuestion() {
+            currentQuizIndex = (currentQuizIndex + 1) % quizData.length;
+            loadQuestion();
+        }
+
+        // 初始化
+        loadQuestion();
         showPage('home');
     </script>
 </body>
