@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「糧」心大數據</title>
+    <style>
+        :root {
+            --bg-color: #f8f9f2;
+            --primary-color: #8c9c75;
+            --accent-color: #d4a373;
+            --text-color: #4a4a4a;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        /* 內容區塊通用樣式 */
+        section {
+            padding: 60px 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 標題與資訊展示 */
+        .info-container { margin-top: 40px; }
+        .news-placeholder {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 80px 20px;
+            text-align: center;
+            color: #999;
+            border: 2px dashed #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        /* 計算機樣式 */
+        .calc-wrapper {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        .calc-form { padding: 40px; }
+        .calc-visual { background-color: #f1f3e8; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+        input[type="number"], select { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 8px; outline: none; }
+        .slider { width: 100%; accent-color: var(--primary-color); }
+        .btn-calc { background-color: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600; font-size: 1rem; }
+
+        .formula-box {
+            background: #fdfdfd;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: left;
+        }
+
+        /* 天平動畫視覺 */
+        .balance-icon {
+            width: 150px;
+            height: 100px;
+            border-bottom: 4px solid var(--primary-color);
+            position: relative;
+            margin-bottom: 20px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .balance-icon::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 4px;
+            height: 60px;
+            background: var(--primary-color);
+            transform: translateX(-2px);
+        }
+
+        /* 地圖佔位 */
+        .map-placeholder {
+            height: 450px;
+            background-color: #e3eaf0;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            border: 2px solid #d1d9e0;
+            margin-top: 20px;
+        }
+
+        /* 微型連署區 - 置底樣式 */
+        .petition-section {
+            text-align: center;
+            padding: 80px 25px;
+            background: var(--white);
+            margin-top: 60px;
+            border-top: 1px solid #eee;
+        }
+        .btn-promise {
+            margin-top: 25px;
+            padding: 20px 80px;
+            background: var(--white);
+            border: 3px solid var(--accent-color);
+            color: var(--accent-color);
+            cursor: pointer;
+            box-shadow: 10px 10px 0px var(--accent-color);
+            transition: 0.1s;
+            font-weight: 800;
+            font-size: 1.6rem;
+        }
+        .btn-promise:active { transform: translate(5px, 5px); box-shadow: 5px 5px 0px var(--accent-color); }
+        .count-num { color: var(--accent-color); font-weight: 900; font-size: 2rem; margin: 0 5px; }
+
+        footer { text-align: center; padding: 40px; font-size: 0.85rem; color: #aaa; background: var(--white); }
+
+        @media (max-width: 850px) {
+            .calc-wrapper { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <section id="home">
+        <div class="info-container">
+            <h1 style="text-align:center; color: var(--primary-color); font-size: 2.2rem; margin-bottom:10px;">飢餓觀察站</h1>
+            <p style="text-align:center; color: #888; margin-bottom:40px;">追蹤全球糧食議題，將剩食轉化為守護的力量</p>
+            <div class="news-placeholder">
+                <h3>[ 此處將會放置 ESG 新聞、文章或專案介紹 ]</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator">
+        <h2 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">剩食計算機</h2>
+        
+        <div class="calc-wrapper">
+            <div class="calc-form">
+                <h3 style="margin-bottom:10px;">數據輸入</h3>
+                <p style="font-size:0.9rem; color:#666; margin-bottom:25px;">請輸入您的剩食數據，我們將為您換算出對應的熱量損失。</p>
+                
+                <div class="input-group">
+                    <label>1. 食物類別 (平均熱量密度)</label>
+                    <select id="food-type">
+                        <option value="0">請選擇類別...</option>
+                        <option value="1.3">米飯/麵食 (1.3 kcal/g)</option>
+                        <option value="2.5">肉類 (2.5 kcal/g)</option>
+                        <option value="0.4">蔬菜 (0.4 kcal/g)</option>
+                        <option value="0.6">水果 (0.6 kcal/g)</option>
+                        <option value="3.5">速食/油炸物 (3.5 kcal/g)</option>
+                        <option value="2.8">甜點/糕點 (2.8 kcal/g)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>2. 浪費份量比例 (<span id="ratio-text">50</span>%)</label>
+                    <input type="range" id="waste-ratio" min="0" max="100" value="50" class="slider" oninput="updateRatio(this.value)">
+                </div>
+
+                <div class="input-group">
+                    <label>3. 平均一餐總重 (g)</label>
+                    <input type="number" id="food-weight" placeholder="不可輸入負數，例如：500" min="0">
+                </div>
+
+                <button class="btn-calc" onclick="runCalc()">立即計算過程與結果</button>
+
+                <div id="formula-display" class="formula-box">
+                    <strong>計算過程：</strong><br>
+                    <span id="process-text"></span>
+                </div>
+            </div>
+
+            <div class="calc-visual">
+                <div class="balance-icon" id="balance-img"></div>
+                <div id="result-msg" style="font-weight:600; color:var(--primary-color); padding: 0 10px;">
+                    計算後，天平將根據浪費比例傾斜
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="map">
+        <h2 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">全球飢餓狀況地圖</h2>
+        <div class="map-placeholder">
+            <p>🌍 [ 世界地圖展示空間 ]</p>
+        </div>
+    </section>
+
+    <section class="petition-section">
+        <h2 style="font-size: 2rem; color: var(--primary-color);">微型連署</h2>
+        <p style="margin-top: 15px; color: #666; font-size: 1.1rem;">
+            您的每一次點擊，都是填滿空碗的一份希望。<br>讓溫暖傳遞到需要的餐桌上。
+        </p>
+        <button class="btn-promise" onclick="incrementCounter()">我承諾</button>
+        <div class="counter-container" style="margin-top:30px; font-size: 1.2rem;">
+            目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 「糧」心大數據 - ESG Sustainable Future Project
+    </footer>
+
+    <script>
+        // --- 1. 連署邏輯 (localStorage 永久保存) ---
+        let pledgeCount = localStorage.getItem('pledge_total') ? parseInt(localStorage.getItem('pledge_total')) : 0;
+        document.getElementById('count').innerText = pledgeCount.toLocaleString();
+
+        function incrementCounter() {
+            pledgeCount++;
+            document.getElementById('count').innerText = pledgeCount.toLocaleString();
+            localStorage.setItem('pledge_total', pledgeCount);
+        }
+
+        // --- 2. 計算機邏輯 ---
+        function updateRatio(val) {
+            document.getElementById('ratio-text').innerText = val;
+        }
+
+        function runCalc() {
+            const density = parseFloat(document.getElementById('food-type').value);
+            const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
+            let weight = parseFloat(document.getElementById('food-weight').value);
+
+            // 檢查類別與負數
+            if (density === 0) {
+                alert("請先選擇食物類別！");
+                return;
+            }
+            if (isNaN(weight) || weight < 0) {
+                alert("錯誤：平均一餐總重不可為負數！");
+                document.getElementById('food-weight').value = 0;
+                return;
+            }
+
+            // 計算結果
+            const kcalWasted = (weight * ratio * density).toFixed(1);
+            const typeLabel = document.getElementById('food-type').options[document.getElementById('food-type').selectedIndex].text.split(' ')[0];
+
+            // 顯示過程
+            const formulaBox = document.getElementById('formula-display');
+            formulaBox.style.display = 'block';
+            document.getElementById('process-text').innerHTML = 
+                `1. 浪費重量：${weight}g × ${(ratio*100).toFixed(0)}% = ${(weight * ratio).toFixed(1)}g<br>` +
+                `2. 熱量轉換：${(weight * ratio).toFixed(1)}g × ${density} kcal/g (${typeLabel})<br>` +
+                `總計浪費：<strong>${kcalWasted} kcal</strong>`;
+
+            // 天平動畫傾斜
+            const balance = document.getElementById('balance-img');
+            const angle = (ratio * 40) - 20; 
+            balance.style.transform = `rotate(${angle}deg)`;
+
+            // 文字結果
+            document.getElementById('result-msg').innerHTML = 
+                `計算完成！<br>您本次共浪費了 <span style="font-size:1.5rem; color:#e67e22;">${kcalWasted}</span> 大卡`;
+        }
+    </script>
+</body>
+</html>
