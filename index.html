@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>「糧」心大數據 - ESG Impact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #f8f9f2;
@@ -28,7 +31,67 @@
             line-height: 1.7;
             padding-top: 20px;
         }
+        /* 頂部大圖樣式 */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    height: 200px; /* 你可以調整高度 */
+    margin-bottom: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
 
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 確保圖片填滿且不變形 */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-overlay h1 {
+    /* 使用思源宋體，備用字體設為 serif */
+    font-family: 'Noto Serif TC', serif;
+    
+    /* 設定為最粗的等級 (Black) */
+    font-weight: 900; 
+    
+    /* 字體加大 */
+    font-size: 5rem; 
+    
+    /* 讓字體更有質感的微調 */
+    letter-spacing: 0.1em;
+    color: #ffffff; /* 確保顏色是純白 */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); /* 增加層次感 */
+    
+    /* 置中對齊 */
+    text-align: center;
+    margin: 0;
+}
+
+.hero-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+    .hero-banner { height: 250px; }
+    .hero-overlay h1 { font-size: 1.8rem; }
+}
         /* 內容區塊控制 */
         .page-content {
             display: none;
@@ -211,14 +274,41 @@
             .cta-container { flex-direction: column; align-items: center; }
             .btn-cta { width: 100%; justify-content: center; }
         }
+        /* 地圖容器 */
+.map-container { position: relative; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+
+/* 圖例 */
+.map-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+}
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-item .box { width: 15px; height: 15px; border-radius: 3px; }
+.level-4 { background: #e76f51; } /* 紅 - 嚴重 */
+.level-3 { background: #f4a261; } /* 橙 - 偏重 */
+.level-2 { background: #e9c46a; } /* 黃 - 中度 */
+.level-1 { background: #8c9c75; } /* 綠 - 穩定 */
+
+path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
+
     </style>
 </head>
 <body>
 
     <!-- 首頁 -->
     <section id="home" class="page-content active">
+        <div class="hero-banner">
+    <div class="hero-overlay">
+        <h1>「糧」心大數據</h1>
+    </div>
+    <!-- 這裡放置你的圖片，或是用 CSS 背景圖 -->
+    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Sustainable Food" class="hero-img">
+</div>
         <div class="info-container">
-            <h1 style="text-align:center; color: var(--primary-color); margin-bottom:10px;">ESG Impact</h1>
             <h2 style="text-align:center; color: #777; margin-bottom:30px; font-weight: 400;">飢餓觀察站</h2>
             
             <div class="news-placeholder">
@@ -304,17 +394,30 @@
         </div>
     </section>
 
-    <!-- 地圖頁面 -->
+       <!-- 地圖頁面 -->
     <section id="map" class="page-content">
-        <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
-        <h1 style="text-align:center; color: var(--primary-color); margin-bottom:30px;">全球飢餓狀況地圖</h1>
-        <div class="map-placeholder">
-            <p>🌍 [ 世界地圖展示空間 ]</p>
-        </div>
-    </section>
+    <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
+    <h1 style="text-align:center; color: var(--primary-color); margin-bottom:10px;">全球飢餓狀況地圖</h1>
+    <p style="text-align:center; color:#888; margin-bottom:20px;">2026 全球營養不良人口分佈圖 </p>
+<div class="map-container" style="text-align: center;">
+    <div id="map-tooltip" class="map-tooltip"></div>
 
-    <footer>&copy; 2026 ESG Sustainable Future Project</footer>
+    <div style="position: relative; display: inline-block;">
+        <img src="https://www.eion.com.tw/Blogger/illustration/world-map/world-map-borders.png" alt="全球地圖" style="width: 100%; max-width: 900px; border-radius: 10px;">
+        
+        <div class="map-point" style="top: 30%; left: 20%;" onmouseover="showTip('北美', '2.5%', '持平')" onmouseout="hideTip()"></div>
+        <div class="map-point" style="top: 70%; left: 30%;" onmouseover="showTip('拉丁美洲', '8.6%', '↑ 0.3%')" onmouseout="hideTip()"></div>
+        <div class="map-point" style="top: 60%; left: 50%;" onmouseover="showTip('次撒哈拉非洲', '24.9%', '↑ 1.2%')" onmouseout="hideTip()"></div>
+        <div class="map-point" style="top: 40%; left: 75%;" onmouseover="showTip('南亞', '16.4%', '↓ 0.5%')" onmouseout="hideTip()"></div>
+    </div>
 
+    <div class="map-legend">
+        <div class="legend-item"><span class="box level-4"></span> 非常嚴重 (>25%)</div>
+        <div class="legend-item"><span class="box level-3"></span> 嚴重 (15-25%)</div>
+        <div class="legend-item"><span class="box level-2"></span> 中度 (5-15%)</div>
+        <div class="legend-item"><span class="box level-1"></span> 穩定 (<5%)</div>
+    </div>
+</div>
     <script>
         // --- 通用頁面切換 ---
         function showPage(pageId) {
