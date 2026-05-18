@@ -328,11 +328,14 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
             </div>
         </div>
 
-        <div class="petition-section">
-            <h2>微型連署</h2>
-            <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
-            <button class="btn-promise" onclick="incrementCounter()">我承諾</button>
-            <div class="counter-container" style="margin-top:20px;">
+            <div class="petition-section">
+                <h2>微型連署</h2>
+                <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
+            
+                <!-- 1. 這裡幫按鈕加了 id="pledgeBtn"，以便後面用 JS 控制它變灰 -->
+                <button id="pledgeBtn" class="btn-promise" onclick="incrementCounter()">我承諾</button>
+            
+                <div class="counter-container" style="margin-top:20px;">
                 目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
             </div>
         </div>
@@ -425,15 +428,6 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
             const target = document.getElementById(pageId);
             if (target) target.style.display = 'block';
             window.scrollTo(0, 0);
-        }
-
-        // --- 連署邏輯 ---
-        let pledgeCount = localStorage.getItem('pledge_total') ? parseInt(localStorage.getItem('pledge_total')) : 0;
-        document.getElementById('count').innerText = pledgeCount.toLocaleString();
-        function incrementCounter() {
-            pledgeCount++;
-            document.getElementById('count').innerText = pledgeCount.toLocaleString();
-            localStorage.setItem('pledge_total', pledgeCount);
         }
 
         // --- 計算機邏輯 ---
@@ -614,6 +608,65 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
         // 初始化
         loadQuestion();
         showPage('home');
+    </script>
+
+    <!-- 2. 獨立出來的 Firebase 連署專用模組（緊接著放在舊 script 後面即可） -->
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // ⚠️ 別忘了貼上你真正的 Firebase 金鑰喔！
+    const firebaseConfig = {
+    apiKey: "AIzaSyA81lxUpjZKpoju-ECSfsOYwqZC_aoSnPI",
+    authDomain: "petition-count.firebaseapp.com",
+    projectId: "petition-count",
+    storageBucket: "petition-count.firebasestorage.app",
+    messagingSenderId: "185724781337",
+    appId: "1:185724781337:web:b84a8d60437ca9a500bb88"
+  };
+
+    // 初始化 Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const pledgeRef = ref(db, 'pledge_total');
+    const pledgeBtn = document.getElementById('pledgeBtn');
+
+    // 本機 LocalStorage 防刷檢查
+    function checkPledgeStatus() {
+        if (localStorage.getItem('has_pledged') === 'true') {
+            pledgeBtn.innerText = '感謝您的承諾';
+            pledgeBtn.disabled = true; 
+            pledgeBtn.style.opacity = '0.6'; 
+            pledgeBtn.style.cursor = 'not-allowed';
+        }
+    }
+
+    checkPledgeStatus();
+
+    // 監聽雲端總數
+    onValue(pledgeRef, (snapshot) => {
+        const data = snapshot.val() || 0;
+        document.getElementById('count').innerText = data.toLocaleString();
+    });
+
+    // 把全域的按鈕事件綁定到 window 上，這樣 HTML 裡的 onclick="incrementCounter()" 才能順利觸獲
+    window.incrementCounter = function() {
+        if (localStorage.getItem('has_pledged') === 'true') return;
+
+        localStorage.setItem('has_pledged', 'true');
+        checkPledgeStatus();
+
+        runTransaction(pledgeRef, (currentCount) => {
+        return (currentCount || 0) + 1;
+        }).catch((error) => {
+        console.error("連署失敗：", error);
+        localStorage.removeItem('has_pledged');
+        pledgeBtn.disabled = false;
+        pledgeBtn.innerText = '我承諾';
+        pledgeBtn.style.opacity = '1';
+        pledgeBtn.style.cursor = 'pointer';
+        });
+    }
     </script>
 </body>
 </html>
