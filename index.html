@@ -166,23 +166,146 @@
             box-shadow: 0 4px 15px rgba(107, 142, 35, 0.2);
         }
 
-        /* 計算機樣式 */
+        /* 計算機樣式優化 */
         .calc-wrapper {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1.1fr 0.9fr;
             background: var(--white);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
         .calc-form { padding: 40px; }
-        .calc-visual { background-color: #f1f3e8; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-        input[type="number"], select { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 8px; outline: none; }
+        .calc-visual { 
+            background-color: #f1f3e8; 
+            padding: 40px; 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; margin-bottom: 10px; font-weight: 600; }
+        
+        /* 複選框排版 */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            background: #fdfdfd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1.5px solid #eee;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        input[type="number"] { width: 100%; padding: 12px; border: 1.5px solid #eee; border-radius: 8px; outline: none; }
         .slider { width: 100%; accent-color: var(--primary-color); }
         .btn-calc { background-color: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: 600; margin-top: 10px;}
         .formula-box { background: #fdfdfd; border-left: 5px solid var(--accent-color); padding: 15px; margin-top: 20px; font-size: 0.9rem; display: none; }
+        
+        .esg-note {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            background: #fcfcfc;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        /* 圖形天平樣式優化 */
+        .balance-container {
+            width: 100%;
+            max-width: 350px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        /* 天平支架 */
+        .balance-stand {
+            width: 12px;
+            height: 120px;
+            background: #7f8c8d;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 6px 6px 0 0;
+        }
+        .balance-base {
+            width: 100px;
+            height: 12px;
+            background: #7f8c8d;
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px;
+        }
+        /* 天平橫樑（會旋轉） */
+        .balance-beam {
+            width: 280px;
+            height: 8px;
+            background: #95a5a6;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            margin-left: -140px;
+            transform-origin: center center;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            justify-content: space-between;
+        }
+        /* 左右秤盤掛線與托盤結構 */
+        .plate-wrapper {
+            position: absolute;
+            top: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 抵消天平橫樑旋轉讓秤盤保持水平 */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .plate-wrapper.left { left: -5px; transform-origin: top center; }
+        .plate-wrapper.right { right: -5px; transform-origin: top center; }
+
+        .string {
+            width: 2px;
+            height: 50px;
+            background: #bdc3c7;
+        }
+        .plate {
+            width: 90px;
+            height: 8px;
+            background: #7f8c8d;
+            border-radius: 0 0 10px 10px;
+            position: relative;
+        }
+        /* 托盤上的圖標容器 */
+        .icon-box {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            font-size: 1.4rem;
+            flex-wrap: wrap;
+            padding: 0 5px;
+            line-height: 1;
+        }
 
         /* 惜食小學堂樣式 - 四選一優化 */
         .quiz-container {
@@ -294,7 +417,95 @@
 .level-1 { background: #8c9c75; } /* 綠 - 穩定 */
 
 path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
+/* ========================================== */
+/* 🌱 測試用：強制置頂紅色大盒子 CSS            */
+/* ========================================== */
+.chat-container {
+            width: 360px !important;
+            height: 500px !important;
+            background-color: white !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            
+            /* 🔴 先暫時維持在中央（或你要改右下角也可以） */
+            position: fixed !important;   
+            top: 50% !important;          
+            left: 50% !important;         
+            transform: translate(-50%, -50%) !important;
+            
+            /* 🔥 關鍵修正 1：給予全網頁最高的「宇宙級圖層順序」，硬是踩在透明遮罩上面 */
+            z-index: 999999999 !important; 
+            
+            /* 🔥 關鍵修正 2：強制開啟點擊事件權限，確保裡面的所有按鈕都能被滑鼠點到 */
+            pointer-events: auto !important; 
+            
+            font-family: sans-serif !important;
+        }
 
+.chat-header {
+    background-color: #607d8b !important;
+    color: white !important;
+    padding: 12px !important;
+    text-align: center !important;
+}
+
+.chat-box {
+    flex: 1 !important;
+    padding: 15px !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    background-color: #f9f9f9 !important;
+}
+
+.message {
+    max-width: 85% !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+}
+
+.ai-message {
+    background-color: #e8f5e9 !important;
+    color: #2e7d32 !important;
+    align-self: flex-start !important;
+}
+
+.user-message {
+    background-color: #8fa887 !important;
+    color: white !important;
+    align-self: flex-end !important;
+}
+
+.input-area {
+    display: flex !important;
+    padding: 12px !important;
+    border-top: 1px solid #eee !important;
+    background-color: #fff !important;
+}
+
+#userInput {
+    flex: 1 !important;
+    padding: 8px 12px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 20px !important;
+    font-size: 0.9rem !important;
+}
+
+.chat-btn {
+    background-color: #8fa887 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0 15px !important;
+    margin-left: 8px !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+}
     </style>
 </head>
 <body>
@@ -348,33 +559,72 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
         <div class="calc-wrapper">
             <div class="calc-form">
                 <h3 style="margin-bottom:10px;">數據輸入</h3>
+                
                 <div class="input-group">
-                    <label>1. 食物類別</label>
-                    <select id="food-type">
-                        <option value="0">請選擇類別...</option>
-                        <option value="1.3">米飯/麵食 (1.3 kcal/g)</option>
-                        <option value="2.5">肉類 (2.5 kcal/g)</option>
-                        <option value="0.4">蔬菜 (0.4 kcal/g)</option>
-                        <option value="0.6">水果 (0.6 kcal/g)</option>
-                        <option value="3.5">速食/油炸物 (3.5 kcal/g)</option>
-                    </select>
+                    <label>1. 食物類別 (可複選)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="food-type" value="1.3"> 🍚 米飯/麵食 (1.3 kcal/g)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="food-type" value="2.5"> 🍗 肉類 (2.5 kcal/g)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="food-type" value="0.4"> 🥦 蔬菜 (0.4 kcal/g)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="food-type" value="0.6"> 🍎 水果 (0.6 kcal/g)
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="food-type" value="3.5"> 🍔 速食/油炸物 (3.5 kcal/g)
+                        </label>
+                    </div>
+                    <div class="esg-note">💡 複選時系統會以所選類別的「平均熱量密度」來估算。</div>
                 </div>
+
                 <div class="input-group">
                     <label>2. 浪費比例 (<span id="ratio-text">50</span>%)</label>
                     <input type="range" id="waste-ratio" min="0" max="100" value="50" class="slider" oninput="updateRatio(this.value)">
                 </div>
+
                 <div class="input-group">
                     <label>3. 平均一餐總重 (g)</label>
                     <input type="number" id="food-weight" placeholder="例如：500" min="0">
                 </div>
+
+                <div class="esg-note" style="background:#fff9f2; border-left-color: var(--accent-color); margin-bottom: 15px;">
+                    📊 <strong>ESG 永續指標基準：</strong><br>
+                    聯合國糧農組織預設飢餓地區兒童維持生命一餐所需基本熱量約為 <strong>400 kcal</strong>。
+                </div>
+
                 <button class="btn-calc" onclick="runCalc()">立即計算</button>
+                
                 <div id="formula-display" class="formula-box">
                     <span id="process-text"></span>
                 </div>
             </div>
+
             <div class="calc-visual">
-                <div class="balance-icon" id="balance-img"></div>
-                <div id="result-msg" style="font-weight:600; color:var(--primary-color);">請點擊計算</div>
+                <div class="balance-container">
+                    <div class="balance-stand">
+                        <div class="balance-beam" id="balance-beam">
+                            <div class="plate-wrapper left" id="left-plate">
+                                <div class="string"></div>
+                                <div class="plate">
+                                    <div class="icon-box">🍔🍗🍚🥦</div>
+                                </div>
+                            </div>
+                            <div class="plate-wrapper right" id="right-plate">
+                                <div class="string"></div>
+                                <div class="plate">
+                                    <div class="icon-box">🌽💧🌾</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="balance-base"></div>
+                    </div>
+                </div>
+                <div id="result-msg" style="font-weight:600; color:var(--primary-color); text-align:center; margin-top:20px; padding: 0 10px;">請點擊計算</div>
             </div>
         </div>
     </section>
@@ -432,224 +682,434 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
 
         // --- 計算機邏輯 ---
         function updateRatio(val) { document.getElementById('ratio-text').innerText = val; }
+        
         function runCalc() {
-            const density = parseFloat(document.getElementById('food-type').value);
+            const checkboxes = document.querySelectorAll('input[name="food-type"]:checked');
             const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
             const weight = parseFloat(document.getElementById('food-weight').value);
-            if (density === 0 || isNaN(weight) || weight < 0) { alert("請輸入正確數據！"); return; }
-            const kcal = (weight * ratio * density).toFixed(1);
+            
+            if (checkboxes.length === 0) { alert("請至少勾選一個食物類別！"); return; }
+            if (isNaN(weight) || weight <= 0) { alert("請輸入正確的食物總重！"); return; }
+            
+            let sumDensity = 0;
+            checkboxes.forEach(cb => { sumDensity += parseFloat(cb.value); });
+            const avgDensity = sumDensity / checkboxes.length;
+            
+            const kcal = (weight * ratio * avgDensity).toFixed(1);
+            const childMealCalories = 400;
+            const childrenCount = (kcal / childMealCalories).toFixed(1);
+            
             document.getElementById('formula-display').style.display = 'block';
-            document.getElementById('process-text').innerHTML = `總計浪費熱量：<strong>${kcal} kcal</strong>`;
-            document.getElementById('balance-img').style.transform = `rotate(${(ratio * 40) - 20}deg)`;
-            document.getElementById('result-msg').innerHTML = `浪費了 <span style="font-size:1.4rem; color:#e67e22;">${kcal}</span> 大卡`;
-        }
-
-        // --- 惜食小學堂邏輯 (15題選擇題) ---
-        const quizData = [
-            { 
-                q: "食品包裝上的「賞味期限」（Best Before）與「有效日期」（Use By）有何本質上的法律與科學差異？", 
-                o: ["(A) 兩者皆指安全性", "(B) 前者指品質穩定性，後者指安全性", "(C) 兩者皆指口感", "(D) 前者受法律規範，後者不受"], 
-                a: 1, 
-                d: "「賞味期限」指在該日期前品質最佳，過期不代表不能食用；「有效日期」則是微生物安全性的分界點，過期可能導致食物中毒。" 
-            },
-            { 
-                q: "根據數據，生產 1 公斤的哪類食物所耗費的虛擬水（Virtual Water）最高？", 
-                o: ["(A) 小麥", "(B) 雞肉", "(C) 牛肉", "(D) 蘋果"], 
-                a: 2, 
-                d: "生產 1 公斤牛肉約需 15,000 公升的水。浪費肉類除了造成碳排放，更涉及更高昂的生物能損耗。" 
-            },
-            { 
-                q: "所謂「醜食」是指外觀不符合規格的農產品。這類食物在供應鏈哪一階段浪費最嚴重？", 
-                o: ["(A) 消費端", "(B) 零售端", "(C) 生產與採收後處理端", "(D) 烹飪端"], 
-                a: 2, 
-                d: "大量符合品質但外觀欠佳的蔬菜，因無法進入自動化包裝或連鎖超市的標準，在產地即被棄置。" 
-            },
-            { 
-                q: "為什麼食物在掩埋場分解對氣候變遷的危害，大於其在自然環境下分解？", 
-                o: ["(A) 產生大量二氧化碳", "(B) 缺乏氧氣產生甲烷", "(C) 污染地下水", "(D) 產生熱能"], 
-                a: 1, 
-                d: "掩埋場是缺氧環境，有機物會進行厭氧分解產生甲烷（CH4），其溫室效應潛力是二氧化碳的 25 倍以上。" 
-            },
-            { 
-                q: "聯合國 SDG 12.3 的目標是到 2030 年將全球零售及消費端的食物浪費量減少多少？", 
-                o: ["(A) 20%", "(B) 30%", "(C) 50%", "(D) 100%"], 
-                a: 2, 
-                d: "該目標明確要求將零售與消費端的糧食浪費減半，並減少生產與供應鏈中的糧食損失。" 
-            },
-            { 
-                q: "在發展中國家，糧食損失（Food Loss）的主要瓶頸通常為何？", 
-                o: ["(A) 消費者購買過多", "(B) 零售規格太嚴", "(C) 基礎冷鏈設施與儲存技術不足", "(D) 快餐文化"], 
-                a: 2, 
-                d: "發展中國家的損失多發生在「採收後」至「零售前」，因缺乏溫控物流導致食物變質。" 
-            },
-            { 
-                q: "國際上常用來保護捐贈食物者（在無惡意情況下）免於法律責任的法律被稱為什麼？", 
-                o: ["(A) 善意撒馬利亞人法", "(B) 消費者保護法", "(C) 食安基本法", "(D) 誠信交易法"], 
-                a: 0, 
-                d: "Good Samaritan Laws 旨在鼓勵剩食捐贈，降低捐贈者因食物中毒風險而被告的擔憂。" 
-            },
-            { 
-                q: "如果將「食物浪費」比喻為一個國家，其碳排放量在全球排名第幾？", 
-                o: ["(A) 第一", "(B) 第三", "(C) 第十", "(D) 第五十"], 
-                a: 1, 
-                d: "食物浪費造成的碳排僅次於中國與美國，佔全球總排放約 8% - 10%。" 
-            },
-            { 
-                q: "哪種包裝技術能最有效延長肉類保鮮期並減少剩食，但也增加了塑膠使用？", 
-                o: ["(A) 紙包裝", "(B) 氣體調控包裝（MAP）", "(C) 玻璃罐裝", "(D) 散裝"], 
-                a: 1, 
-                d: "MAP 技術透過更換包裝內的氧、氮、二氧化碳比例來抑菌。反映了環境成本與浪費成本之間的權衡。" 
-            },
-            { 
-                q: "在加工黃豆製成豆腐的過程中，產生的哪種副產物可提供極高纖維質？", 
-                o: ["(A) 豆漿", "(B) 豆粕/豆渣", "(C) 豆皮", "(D) 鹽滷"], 
-                a: 1, 
-                d: "豆渣含有大量優質蛋白與膳食纖維，現正發展為高價值替代粉類。" 
-            },
-            { 
-                q: "每生產 100 卡路里的榖物餵給牛隻，最終轉換成牛肉後約僅剩多少卡路里供人食用？", 
-                o: ["(A) 90", "(B) 50", "(C) 10", "(D) 3"], 
-                a: 3, 
-                d: "牛隻的轉換率極低（約 3%），其餘消耗於維持生命。浪費牛肉等於浪費了 30 倍以上的榖物能量。" 
-            },
-            { 
-                q: "零售商採取的哪種行銷策略最常導致消費者產生非理性的食物浪費？", 
-                o: ["(A) 單價標示", "(B) 買一送一 (BOGOF)", "(C) 裸賣櫃檯", "(D) 現做專區"], 
-                a: 1, 
-                d: "買一送一常促使家庭購買超過消耗能力的份量，導致食物在冰箱中過期。" 
-            },
-            { 
-                q: "哪種數位技術被認為能透過提高供應鏈透明度，精準預測庫存以減少浪費？", 
-                o: ["(A) AI 與區塊鏈", "(B) 虛擬實境", "(C) 雲端列印", "(D) 社交媒體"], 
-                a: 0, 
-                d: "區塊鏈可追蹤物流狀態，AI 則能精準預測市場需求，減少超市過度進貨。" 
-            },
-            { 
-                q: "回收廚餘製成的堆肥，主要透過哪種機制幫助全球減碳？", 
-                o: ["(A) 反射陽光", "(B) 增加土壤有機碳封存", "(C) 減少雨水蒸發", "(D) 殺滅害蟲"], 
-                a: 1, 
-                d: "有機質回歸土壤可穩定碳元素，並減少合成化肥（生產過程極耗能）的使用。" 
-            },
-            { 
-                q: "減少食物浪費對環境最大的貢獻在於？", 
-                o: ["(A) 增加垃圾掩埋體積", "(B) 同時節省水、土地與減少溫室氣體排放", "(C) 提高食物單價", "(D) 減少農夫工作量"], 
-                a: 1, 
-                d: "食物生產耗費巨大資源，減少浪費是守護地球資源最有效的方法之一。" 
-            }
-        ];
-
-        let currentQuizIndex = 0;
-        let hasAnswered = false;
-
-        function loadQuestion() {
-            hasAnswered = false;
-            const qData = quizData[currentQuizIndex];
-            document.getElementById('quiz-progress').innerText = `第 ${currentQuizIndex + 1} / ${quizData.length} 題`;
-            document.getElementById('question-text').innerText = qData.q;
+            document.getElementById('process-text').innerHTML = `
+                <strong>計算公式明細：</strong><br>
+                食物重量 (${weight}g) × 浪費比例 (${(ratio*100)}%) × 平均密度 (${avgDensity.toFixed(2)} kcal/g) = <strong>${kcal} kcal</strong>
+            `;
             
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
+            // 💥 關鍵修改：讓天平永遠偏向左邊 (角度限制在 +15度 到 +45度 之間)
+            // 即使 ratio 是 0 (沒浪費)，也依然傾斜 15 度，代表隱形資源債
+            const angle = -15 - (ratio * 30); 
             
-            qData.o.forEach((optText, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'btn-option';
-                btn.innerText = optText;
-                btn.onclick = () => checkAnswer(index, btn);
-                optionsContainer.appendChild(btn);
-            });
-
-            document.getElementById('quiz-feedback').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
+            const beam = document.getElementById('balance-beam');
+            const leftPlate = document.getElementById('left-plate');
+            const rightPlate = document.getElementById('right-plate');
+            
+            beam.style.transform = `rotate(${angle}deg)`;
+            leftPlate.style.transform = `rotate(${-angle}deg)`;
+            rightPlate.style.transform = `rotate(${-angle}deg)`;
+            
+            document.getElementById('result-msg').innerHTML = `
+                你的一餐浪費了 <span style="font-size:1.4rem; color:#e67e22; font-weight:900;">${kcal}</span> 大卡<br>
+                <span style="color:#e76f51; font-size:1.1rem; display:block; margin-top:8px; font-weight:700;">
+                    ⚠️ 這等於奪走了 <span style="font-size:1.6rem; text-decoration:underline;">${childrenCount}</span> 個飢餓地區兒童一餐的溫飽！
+                </span>
+            `;
         }
 
-        function checkAnswer(selectedIndex, clickedBtn) {
-            if (hasAnswered) return;
-            hasAnswered = true;
+// ==========================================
+// 🚀 終極圖標懸浮開關版：點擊圖標才展開對話框
+// ==========================================
+window.addEventListener('load', () => {
+    // 1. 建立升級版的 CSS 樣式
+    const style = document.createElement('style');
+    style.innerHTML = `
+        /* 🟢 右下角懸浮小圖標 */
+        .chat-launcher-btn {
+            position: fixed !important;
+            bottom: 25px !important;
+            right: 25px !important;
+            width: 60px !important;
+            height: 60px !important;
+            background-color: #708a69 !important; /* 契合你網頁的大地草綠色 */
+            color: white !important;
+            border-radius: 50% !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            z-index: 999999999 !important;
+            font-size: 28px !important;
+            transition: transform 0.2s ease, background-color 0.2s !important;
+            pointer-events: auto !important;
+        }
+        .chat-launcher-btn:hover {
+            transform: scale(1.08) !important;
+            background-color: #5c7556 !important;
+        }
 
-            const qData = quizData[currentQuizIndex];
-            const feedback = document.getElementById('quiz-feedback');
-            const allBtns = document.querySelectorAll('.btn-option');
+        /* 🟢 對話框主體（預設隱形 display: none） */
+        .chat-container {
+            width: 360px !important;
+            height: 500px !important;
+            background-color: white !important;
+            border-radius: 15px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+            display: none !important; /* 🔥 初始隱藏，點擊圖標才顯示 */
+            flex-direction: column !important;
+            overflow: hidden !important;
+            position: fixed !important;   
+            bottom: 95px !important;      /* 調整至圖標上方 */
+            right: 25px !important;       
+            z-index: 999999999 !important; 
+            pointer-events: auto !important; 
+            user-select: text !important;
+            font-family: sans-serif !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        /* 🟢 開關動畫輔助樣式 */
+        .chat-container.active {
+            display: flex !important; /* 點擊後改為 flex 顯示 */
+        }
 
-            allBtns.forEach((btn, index) => {
-                btn.disabled = true;
-                if (index === qData.a) {
-                    btn.classList.add('correct');
-                }
-            });
+        /* 🟢 內部元件樣式 */
+        .chat-header { 
+            background-color: #708a69 !important; 
+            color: white !important; 
+            padding: 12px !important; 
+            text-align: center !important; 
+            position: relative !important;
+        }
+        /* 內建關閉小叉叉 */
+        .chat-close-btn {
+            position: absolute !important;
+            top: 12px !important;
+            right: 15px !important;
+            cursor: pointer !important;
+            font-size: 1.2rem !important;
+            opacity: 0.8 !important;
+        }
+        .chat-close-btn:hover { opacity: 1 !important; }
+        
+        .chat-box { flex: 1 !important; padding: 15px !important; overflow-y: auto !important; display: flex !important; flex-direction: column !important; gap: 12px !important; background-color: #f9f9f9 !important; }
+        .message { max-width: 85% !important; padding: 8px 12px !important; border-radius: 12px !important; font-size: 0.9rem !important; line-height: 1.4 !important; word-wrap: break-word !important; }
+        .ai-message { background-color: #e8f5e9 !important; color: #2e7d32 !important; align-self: flex-start !important; border-top-left-radius: 2px !important; }
+        .user-message { background-color: #8fa887 !important; color: white !important; align-self: flex-end !important; border-top-right-radius: 2px !important; }
+        .input-area { display: flex !important; padding: 12px !important; border-top: 1px solid #eee !important; background-color: #fff !important; }
+        #userInput { flex: 1 !important; padding: 8px 12px !important; border: 1px solid #ddd !important; border-radius: 20px !important; outline: none !important; font-size: 0.9rem !important; cursor: text !important; }
+        .chat-btn { background-color: #8fa887 !important; color: white !important; border: none !important; padding: 0 15px !important; margin-left: 8px !important; border-radius: 20px !important; cursor: pointer !important; font-size: 0.9rem !important; }
+    `;
+    document.head.appendChild(style);
 
-            feedback.style.display = 'block';
-            if (selectedIndex === qData.a) {
-                feedback.innerHTML = `<strong>✅ 答對了！</strong><br>${qData.d}`;
-                feedback.className = "quiz-feedback success";
-            } else {
-                clickedBtn.classList.add('wrong');
-                feedback.innerHTML = `<strong>❌ 答錯了！正確答案是 ${qData.o[qData.a]}</strong><br>${qData.d}`;
-                feedback.className = "quiz-feedback error";
+    // 2. 注入右下角懸浮圖標
+    const launcherBtn = document.createElement('div');
+    launcherBtn.className = 'chat-launcher-btn';
+    launcherBtn.id = 'chatLauncher';
+    launcherBtn.innerHTML = '🌱'; // 圖標使用小幼苗，象徵惜食與減碳
+    document.body.appendChild(launcherBtn);
+
+    // 3. 注入對話框主體（插在 body 最前面）
+    const chatDiv = document.createElement('div');
+    chatDiv.className = 'chat-container';
+    chatDiv.id = 'chatContainer';
+    chatDiv.innerHTML = `
+        <div class="chat-header">
+            <h3 style="margin: 0; font-size: 1.1rem; color: white;">🌱 AI 惜食食譜產生器</h3>
+            <p style="margin: 3px 0 0 0; font-size: 0.75rem; color: white; opacity: 0.9;">讓我幫你的冰箱剩食變美味！</p>
+            <div class="chat-close-btn" id="closeChat">×</div>
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="message ai-message">你好！請告訴我你手邊有哪些剩餘的食材？（例如：剩飯、快枯萎的高麗菜）</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="請輸入食材...">
+            <button class="chat-btn" id="sendBtn">發送</button>
+        </div>
+    `;
+    
+    if (document.body.firstChild) {
+        document.body.insertBefore(chatDiv, document.body.firstChild);
+    } else {
+        document.body.appendChild(chatDiv);
+    }
+
+    // 4. 開關邏輯綁定
+    const chatContainer = document.getElementById('chatContainer');
+    
+    // 點擊小幼苗圖標：切換開關對話框
+    launcherBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        chatContainer.classList.toggle('active');
+        // 自動把游標聚焦到輸入框中，方便直接打字
+        if (chatContainer.classList.contains('active')) {
+            setTimeout(() => document.getElementById('userInput').focus(), 100);
+        }
+    });
+
+    // 點擊右上角的小叉叉：關閉對話框
+    document.getElementById('closeChat').addEventListener('click', (e) => {
+        e.stopPropagation();
+        chatContainer.classList.remove('active');
+    });
+
+    // 5. 點擊輸入框對焦修正
+    const inputEl = document.getElementById('userInput');
+    if (inputEl) {
+        inputEl.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+            inputEl.focus();
+        });
+    }
+
+    // 6. 綁定按鈕與鍵盤發送
+    const sendBtnEl = document.getElementById('sendBtn');
+    if (sendBtnEl) {
+        sendBtnEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sendMessage();
+        });
+    }
+
+    if (inputEl) {
+        inputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.stopPropagation();
+                sendMessage();
             }
-            document.getElementById('next-btn').style.display = 'block';
-        }
+        });
+    }
+});
 
-        function nextQuestion() {
+// 7. 發送訊息核心邏輯（維持在外層不變）
+async function sendMessage() {
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    appendMessage(text, 'user-message');
+    userInput.value = '';
+
+    const loadingId = appendMessage('正在為您規劃惜食食譜中...', 'ai-message');
+
+    try {
+        const response = await fetch('http://localhost:3000/api/recipe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ingredients: text })
+        });
+        
+        const data = await response.json();
+        document.getElementById(loadingId).remove();
+        
+        if (data.recipe) {
+            const formattedRecipe = data.recipe.replace(/\n/g, '<br>');
+            appendMessage(formattedRecipe, 'ai-message', true);
+        } else {
+            appendMessage('抱歉，產生食譜時出了點問題。', 'ai-message');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById(loadingId).innerText = '無法連線到後端伺服器，請確認 Python app.py 有沒有啟動！';
+    }
+}
+
+function appendMessage(text, className, isHTML = false) {
+    const chatBox = document.getElementById('chatBox');
+    const messageDiv = document.createElement('div');
+    const id = 'msg-' + Date.now();
+    messageDiv.id = id;
+    messageDiv.className = `message ${className}`;
+    
+    if (isHTML) {
+        messageDiv.innerHTML = text;
+    } else {
+        messageDiv.innerText = text;
+    }
+    
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return id;
+
+}
+    </script>
+   
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, runTransaction, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // ====== 1. Firebase 初始化配置 ======
+    const firebaseConfig = {
+        apiKey: "AIzaSyA81lxUpjZKpoju-ECSfsOYwqZC_aoSnPI",
+        authDomain: "petition-count.firebaseapp.com",
+        databaseURL: "https://petition-count-default-rtdb.firebaseio.com", // 加上你的 RTDB 網址確保連線正確
+        projectId: "petition-count",
+        storageBucket: "petition-count.firebasestorage.app",
+        messagingSenderId: "185724781337",
+        appId: "1:185724781337:web:b84a8d60437ca9a500bb88"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // ====== 2. 題目測驗變數與邏輯 ======
+    let quizData = []; // 用來存放從 Firebase 抓下來的題目陣列
+    let currentQuizIndex = 0;
+    let hasAnswered = false;
+    let score = 0; // 🎯 修正 1：新增用來記錄答對題數的變數
+
+    // 🎯 修正 2：洗牌函數 (Fisher-Yates Shuffle)，用來隨機打亂題目順序
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function loadQuestion() {
+        if (quizData.length === 0) return; // 防呆，沒題目就不執行
+        
+        hasAnswered = false;
+        const qData = quizData[currentQuizIndex];
+        document.getElementById('quiz-progress').innerText = `第 ${currentQuizIndex + 1} / ${quizData.length} 題`;
+        document.getElementById('question-text').innerText = qData.q;
+        
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+        
+        qData.o.forEach((optText, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-option';
+            btn.innerText = optText;
+            btn.onclick = () => window.checkAnswer(index, btn); // 改用 window 呼叫
+            optionsContainer.appendChild(btn);
+        });
+
+        document.getElementById('quiz-feedback').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'none';
+    }
+
+    // 掛載 checkAnswer 到 window 上，讓動態生成的 button 點擊事件能找到它
+    window.checkAnswer = function(selectedIndex, clickedBtn) {
+        if (hasAnswered) return;
+        hasAnswered = true;
+
+        const qData = quizData[currentQuizIndex];
+        const feedback = document.getElementById('quiz-feedback');
+        const allBtns = document.querySelectorAll('.btn-option');
+
+        allBtns.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === qData.a) {
+                btn.classList.add('correct');
+            }
+        });
+
+        feedback.style.display = 'block';
+        if (selectedIndex === qData.a) {
+            score++; // 🎯 修正 1：答對了，分數加 1
+            feedback.innerHTML = `<strong>✅ 答對了！</strong><br>${qData.d || ''}`;
+            feedback.className = "quiz-feedback success";
+        } else {
+            clickedBtn.classList.add('wrong');
+            feedback.innerHTML = `<strong>❌ 答錯了！正確答案是 ${qData.o[qData.a]}</strong><br>${qData.d || ''}`;
+            feedback.className = "quiz-feedback error";
+        }
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    // 掛載 nextQuestion 到 window 上，供 HTML 下一題按鈕呼叫
+        window.nextQuestion = function() {
             currentQuizIndex++;
             if (currentQuizIndex < quizData.length) {
                 loadQuestion();
             } else {
-                // 結束畫面
+                // 🎯 根據得分範圍 (0~5, 6~10, 11~15) 決定顯示的文字
+                let feedbackText = "";
+                
+                if (score <= 5) {
+                    feedbackText = "再接再厲！食物永續的觀念稍微有點落後，多留意生活中的飲食選擇，你可以做得更好！";
+                } else if (score <= 10) {
+                    feedbackText = "表現不錯！你已經具備基本的食物永續觀念，再加把勁就能成為環保飲食達人囉！";
+                } else {
+                    feedbackText = "太厲害了！你擁有非常卓越的食物永續與環保觀念，簡直是守護地球的綠色模範生！";
+                }
+
+                // 結束畫面調整，動態帶入得分與對應文字
                 document.getElementById('quiz-box').innerHTML = `
                     <div style="text-align:center; padding:20px;">
                         <h2 style="color:var(--primary-color)">挑戰完成！</h2>
-                        <p style="margin:20px 0;">你已經掌握了 15 個關鍵的食物永續觀念。</p>
-                        <button class="btn-calc" onclick="location.reload()">重新挑戰</button>
+                        <p style="margin:15px 0; font-size: 1.2rem;">
+                            您的得分：<strong style="color: #e67e22; font-size: 1.5rem;">${score}</strong> / ${quizData.length} 題
+                        </p>
+                        <p style="margin:20px auto; max-width: 400px; color: #555; line-height: 1.6; font-size: 1.05rem;">
+                            ${feedbackText}
+                        </p>
+                        <button class="btn-calc" onclick="location.reload()" style="margin-top: 10px;">重新挑戰</button>
                     </div>
                 `;
             }
         }
 
-        // 初始化
-        loadQuestion();
-        showPage('home');
-    </script>
+    // 從 Firebase 即時獲取題目的功能
+    function fetchQuizData() {
+        const quizRef = ref(db, 'quizData');
+        get(quizRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const rawData = snapshot.val();
+                
+                // 先把 Firebase 的物件轉成普通的陣列
+                const tempArray = Object.keys(rawData).map(key => rawData[key]);
+                
+                // 🎯 修正 2：呼叫洗牌函數，隨機打亂這份題目陣列
+                quizData = shuffleArray(tempArray);
+                
+                // 題目資料隨機載入完成後，初始化畫面
+                loadQuestion();
+            } else {
+                console.error("Firebase 中找不到 quizData 節點");
+                document.getElementById('question-text').innerText = "題目載入失敗，請確認資料庫。";
+            }
+        }).catch((error) => {
+            console.error("讀取題目發生錯誤:", error);
+        });
+    }
 
-    <!-- 2. 獨立出來的 Firebase 連署專用模組（緊接著放在舊 script 後面即可） -->
-    <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // ⚠️ 別忘了貼上你真正的 Firebase 金鑰喔！
-    const firebaseConfig = {
-    apiKey: "AIzaSyA81lxUpjZKpoju-ECSfsOYwqZC_aoSnPI",
-    authDomain: "petition-count.firebaseapp.com",
-    projectId: "petition-count",
-    storageBucket: "petition-count.firebasestorage.app",
-    messagingSenderId: "185724781337",
-    appId: "1:185724781337:web:b84a8d60437ca9a500bb88"
-  };
-
-    // 初始化 Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+    // ====== 3. 連署計數器邏輯 ======
     const pledgeRef = ref(db, 'pledge_total');
     const pledgeBtn = document.getElementById('pledgeBtn');
 
-    // 本機 LocalStorage 防刷檢查
     function checkPledgeStatus() {
         if (localStorage.getItem('has_pledged') === 'true') {
-            pledgeBtn.innerText = '感謝您的承諾';
-            pledgeBtn.disabled = true; 
-            pledgeBtn.style.opacity = '0.6'; 
-            pledgeBtn.style.cursor = 'not-allowed';
+            if(pledgeBtn) {
+                pledgeBtn.innerText = '感謝您的承諾';
+                pledgeBtn.disabled = true; 
+                pledgeBtn.style.opacity = '0.6'; 
+                pledgeBtn.style.cursor = 'not-allowed';
+            }
         }
     }
 
-    checkPledgeStatus();
-
-    // 監聽雲端總數
+    // 監聽雲端連署總數
     onValue(pledgeRef, (snapshot) => {
         const data = snapshot.val() || 0;
-        document.getElementById('count').innerText = data.toLocaleString();
+        const countEl = document.getElementById('count');
+        if (countEl) countEl.innerText = data.toLocaleString();
     });
 
-    // 把全域的按鈕事件綁定到 window 上，這樣 HTML 裡的 onclick="incrementCounter()" 才能順利觸獲
+    // 掛載連署點擊事件到 window 上，供 HTML 的 onclick="incrementCounter()" 呼叫
     window.incrementCounter = function() {
         if (localStorage.getItem('has_pledged') === 'true') return;
 
@@ -657,16 +1117,44 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
         checkPledgeStatus();
 
         runTransaction(pledgeRef, (currentCount) => {
-        return (currentCount || 0) + 1;
+            return (currentCount || 0) + 1;
         }).catch((error) => {
-        console.error("連署失敗：", error);
-        localStorage.removeItem('has_pledged');
-        pledgeBtn.disabled = false;
-        pledgeBtn.innerText = '我承諾';
-        pledgeBtn.style.opacity = '1';
-        pledgeBtn.style.cursor = 'pointer';
+            console.error("連署失敗：", error);
+            localStorage.removeItem('has_pledged');
+            if(pledgeBtn) {
+                pledgeBtn.disabled = false;
+                pledgeBtn.innerText = '我承諾';
+                pledgeBtn.style.opacity = '1';
+                pledgeBtn.style.cursor = 'pointer';
+            }
         });
     }
+
+    // ====== 4. 網頁初始化載入 ======
+    checkPledgeStatus();
+    fetchQuizData();     // 從 Firebase 撈題目
+    if (typeof showPage === 'function') {
+        showPage('home'); // 如果你有原先的換頁邏輯就保留
+    }
     </script>
+</div>
+
+<h1 style="color: red; font-size: 50px;">看得到這行紅色的字嗎？</h1>
+<div class="chat-container">
+    <div class="chat-header">
+        <h3 style="margin: 0; font-size: 1.1rem;">🌱 AI 惜食食譜產生器</h3>
+        <p style="margin: 3px 0 0 0; font-size: 0.75rem; opacity: 0.9;">讓我幫你的冰箱剩食變美味！</p>
+    </div>
+    
+    <div class="chat-box" id="chatBox">
+        <div class="message ai-message">
+            你好！請告訴我你手邊有哪些剩餘的食材？（例如：剩飯、快枯萎的高麗菜、半塊雞胸肉）
+        </div>
+    </div>
+    
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="請輸入食材..." onkeydown="if(event.key==='Enter') sendMessage()">
+        <button class="chat-btn" onclick="sendMessage()">發送</button>
+    </div>
 </body>
 </html>
