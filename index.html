@@ -536,6 +536,9 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
                 <button class="btn-cta secondary" onclick="showPage('map')">
                     <span class="icon">🌍</span> 全球飢餓地圖
                 </button>
+                <button class="btn-cta" id="aiRecipeBtn" style="background-color: #708a69; color: white;">
+                    <span class="icon">🌱</span> AI 惜食食譜產生器
+                </button>
             </div>
         </div>
 
@@ -726,55 +729,32 @@ path:hover { filter: brightness(0.8); cursor: pointer; transition: 0.2s; }
         }
 
 // ==========================================
-// 🚀 終極圖標懸浮開關版：點擊圖標才展開對話框
+// 🚀 結合版：由網頁內建按鈕觸發的 AI 對話框
 // ==========================================
 window.addEventListener('load', () => {
-    // 1. 建立升級版的 CSS 樣式
+    // 1. 建立升級版的 CSS 樣式（已移除右下角小草懸浮鈕樣式）
     const style = document.createElement('style');
     style.innerHTML = `
-        /* 🟢 右下角懸浮小圖標 */
-        .chat-launcher-btn {
-            position: fixed !important;
-            bottom: 25px !important;
-            right: 25px !important;
-            width: 60px !important;
-            height: 60px !important;
-            background-color: #708a69 !important; /* 契合你網頁的大地草綠色 */
-            color: white !important;
-            border-radius: 50% !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            cursor: pointer !important;
-            z-index: 999999999 !important;
-            font-size: 28px !important;
-            transition: transform 0.2s ease, background-color 0.2s !important;
-            pointer-events: auto !important;
-        }
-        .chat-launcher-btn:hover {
-            transform: scale(1.08) !important;
-            background-color: #5c7556 !important;
-        }
-
-        /* 🟢 對話框主體（預設隱形 display: none） */
+        /* 🟢 對話框主體（位置調整為固定在畫面中央偏右下，或你要維持置中都可以） */
         .chat-container {
             width: 360px !important;
             height: 500px !important;
             background-color: white !important;
             border-radius: 15px !important;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
-            display: none !important; /* 🔥 初始隱藏，點擊圖標才顯示 */
+            display: none !important; /* 初始隱藏，點擊按鈕才顯示 */
             flex-direction: column !important;
             overflow: hidden !important;
             position: fixed !important;   
-            bottom: 95px !important;      /* 調整至圖標上方 */
-            right: 25px !important;       
+            
+            /* 🔥 讓它優雅地浮動在畫面偏右下的位置 */
+            bottom: 30px !important;      
+            right: 30px !important;       
+            
             z-index: 999999999 !important; 
             pointer-events: auto !important; 
             user-select: text !important;
             font-family: sans-serif !important;
-            transition: all 0.3s ease !important;
         }
         
         /* 🟢 開關動畫輔助樣式 */
@@ -811,14 +791,7 @@ window.addEventListener('load', () => {
     `;
     document.head.appendChild(style);
 
-    // 2. 注入右下角懸浮圖標
-    const launcherBtn = document.createElement('div');
-    launcherBtn.className = 'chat-launcher-btn';
-    launcherBtn.id = 'chatLauncher';
-    launcherBtn.innerHTML = '🌱'; // 圖標使用小幼苗，象徵惜食與減碳
-    document.body.appendChild(launcherBtn);
-
-    // 3. 注入對話框主體（插在 body 最前面）
+    // 2. 注入對話框主體（插在 body 最前面，原先的 chat-launcher-btn 已經拿掉了）
     const chatDiv = document.createElement('div');
     chatDiv.className = 'chat-container';
     chatDiv.id = 'chatContainer';
@@ -843,26 +816,28 @@ window.addEventListener('load', () => {
         document.body.appendChild(chatDiv);
     }
 
-    // 4. 開關邏輯綁定
+    // 3. 綁定開關邏輯
     const chatContainer = document.getElementById('chatContainer');
+    const aiRecipeBtn = document.getElementById('aiRecipeBtn');
     
-    // 點擊小幼苗圖標：切換開關對話框
-    launcherBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        chatContainer.classList.toggle('active');
-        // 自動把游標聚焦到輸入框中，方便直接打字
-        if (chatContainer.classList.contains('active')) {
-            setTimeout(() => document.getElementById('userInput').focus(), 100);
-        }
-    });
+    // 💥 連接新按鈕：點擊排版區的「AI 惜食食譜」按鈕，展開或收合對話框
+    if (aiRecipeBtn) {
+        aiRecipeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chatContainer.classList.toggle('active');
+            if (chatContainer.classList.contains('active')) {
+                setTimeout(() => document.getElementById('userInput').focus(), 100);
+            }
+        });
+    }
 
-    // 點擊右上角的小叉叉：關閉對話框
+    // 點擊對話框右上角的叉叉：關閉對話框
     document.getElementById('closeChat').addEventListener('click', (e) => {
         e.stopPropagation();
         chatContainer.classList.remove('active');
     });
 
-    // 5. 點擊輸入框對焦修正
+    // 4. 點擊輸入框對焦修正
     const inputEl = document.getElementById('userInput');
     if (inputEl) {
         inputEl.addEventListener('mousedown', (e) => {
@@ -871,7 +846,7 @@ window.addEventListener('load', () => {
         });
     }
 
-    // 6. 綁定按鈕與鍵盤發送
+    // 5. 綁定發送按鈕
     const sendBtnEl = document.getElementById('sendBtn');
     if (sendBtnEl) {
         sendBtnEl.addEventListener('click', (e) => {
@@ -890,7 +865,7 @@ window.addEventListener('load', () => {
     }
 });
 
-// 7. 發送訊息核心邏輯（維持在外層不變）
+// 6. 發送訊息核心邏輯（維持在外層不變，請記得檢查裡面的 fetch 網址是否為你的永久網址）
 async function sendMessage() {
     const chatBox = document.getElementById('chatBox');
     const userInput = document.getElementById('userInput');
@@ -903,8 +878,6 @@ async function sendMessage() {
     const loadingId = appendMessage('正在為您規劃惜食食譜中...', 'ai-message');
 
     try {
-        // 🔴 把原本的 http://localhost:3000 刪掉，改成你的 ngrok 網址
-        // 範例：'https://xxxx-xxxx.ngrok.dev/api/recipe'
         const response = await fetch('https://percolate-remission-hardy.ngrok-free.dev/api/recipe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -922,7 +895,7 @@ async function sendMessage() {
         }
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById(loadingId).innerText = '無法連線到後端伺服器，請確認 Python app.py 有沒有啟動！';
+        document.getElementById(loadingId).innerText = '無法連線到後端伺服器，請確認 Python app.py 和 ngrok 有沒有啟動！';
     }
 }
 
@@ -942,8 +915,8 @@ function appendMessage(text, className, isHTML = false) {
     chatBox.appendChild(messageDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
     return id;
-
 }
+
     </script>
    
     <script type="module">
