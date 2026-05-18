@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
             --bg-color: #f8f9f2;
@@ -513,18 +514,6 @@
             margin: 0 5px;
         }
 
-        /* 地圖佔位 */
-        .map-placeholder {
-            height: 500px;
-            background-color: #e3eaf0;
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #666;
-            border: 2px solid #d1d9e0;
-        }
-
         footer {
             text-align: center;
             padding: 40px;
@@ -548,152 +537,104 @@
             }
         }
 
-        /* 地圖容器 */
-        .map-container {
-            position: relative;
-            background: white;
+        /* 地圖佔位 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        #map {
+            height: 65vh;
+            width: 100%;
+        }
+
+        /* 標題區塊 */
+        .header {
             padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: #fff;
+            border-bottom: 2px solid #ddd;
         }
 
-
-        /* 圖例 */
-        .map-legend {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            font-size: 0.8rem;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .legend-item .box {
-            width: 15px;
-            height: 15px;
-            border-radius: 3px;
-        }
-
-        .level-4 {
-            background: #e76f51;
-        }
-
-        /* 紅 - 嚴重 */
-        .level-3 {
-            background: #f4a261;
-        }
-
-        /* 橙 - 偏重 */
-        .level-2 {
-            background: #e9c46a;
-        }
-
-        /* 黃 - 中度 */
-        .level-1 {
-            background: #8c9c75;
-        }
-
-        /* 綠 - 穩定 */
-
-        path:hover {
-            filter: brightness(0.8);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        /* ========================================== */
-        /* 🌱 測試用：強制置頂紅色大盒子 CSS            */
-        /* ========================================== */
-        .chat-container {
-            width: 360px !important;
-            height: 500px !important;
-            background-color: white !important;
-            border-radius: 15px !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
-            display: flex !important;
-            flex-direction: column !important;
-            overflow: hidden !important;
-
-            /* 🔴 先暫時維持在中央（或你要改右下角也可以） */
-            position: fixed !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-
-            /* 🔥 關鍵修正 1：給予全網頁最高的「宇宙級圖層順序」，硬是踩在透明遮罩上面 */
-            z-index: 999999999 !important;
-
-            /* 🔥 關鍵修正 2：強制開啟點擊事件權限，確保裡面的所有按鈕都能被滑鼠點到 */
-            pointer-events: auto !important;
-
-            font-family: sans-serif !important;
-        }
-
-        .chat-header {
-            background-color: #607d8b !important;
-            color: white !important;
-            padding: 12px !important;
-            text-align: center !important;
-        }
-
-        .chat-box {
-            flex: 1 !important;
-            padding: 15px !important;
-            overflow-y: auto !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 12px !important;
-            background-color: #f9f9f9 !important;
-        }
-
-        .message {
-            max-width: 85% !important;
-            padding: 8px 12px !important;
-            border-radius: 12px !important;
-            font-size: 0.9rem !important;
-            line-height: 1.4 !important;
-        }
-
-        .ai-message {
-            background-color: #e8f5e9 !important;
-            color: #2e7d32 !important;
-            align-self: flex-start !important;
-        }
-
-        .user-message {
-            background-color: #8fa887 !important;
-            color: white !important;
-            align-self: flex-end !important;
-        }
-
-        .input-area {
-            display: flex !important;
-            padding: 12px !important;
-            border-top: 1px solid #eee !important;
-            background-color: #fff !important;
-        }
-
-        #userInput {
-            flex: 1 !important;
-            padding: 8px 12px !important;
-            border: 1px solid #ddd !important;
-            border-radius: 20px !important;
-            font-size: 0.9rem !important;
-        }
-
-        .chat-btn {
-            background-color: #8fa887 !important;
-            color: white !important;
+        /* 解除地圖外殼的白框、陰影與留白 */
+        #map-page.page-content {
+            background: transparent !important;
+            /* 將白色背景變透明 */
+            background-color: transparent !important;
+            /* 確保徹底透明 */
+            box-shadow: none !important;
+            /* 拔除外圍的陰影 */
             border: none !important;
-            padding: 0 15px !important;
-            margin-left: 8px !important;
-            border-radius: 20px !important;
-            cursor: pointer !important;
+            /* 拔除可能有的邊框 */
+            padding: 0 !important;
+            /* 移除四週留白，讓地圖滿版 */
+            max-width: 100% !important;
+            /* 允許寬度 100% 撐開 */
+        }
+
+        /* 讓地圖上方的標題與返回按鈕維持原本乾淨的置中排版 */
+        #map-page .header {
+            background: transparent;
+            border-bottom: none;
+
+            /* 核心調整：第一個數字 20px 是上下距離，第二個數字 80px 是左邊的距離 */
+            /* 如果覺得不夠右邊，可以把 80px 改成 100px 或 120px 喔！ */
+            padding: 20px 80px !important;
+
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        h1 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+
+        /* 資訊面板樣式 (圖片中的黃色視窗效果) */
+        .info {
+            padding: 12px 16px;
+            font: 14px/18px Arial, Helvetica, sans-serif;
+            background: rgba(255, 255, 150, 0.9);
+            /* 黃色背景 */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            color: #333;
+            min-width: 150px;
+        }
+
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+
+        .trend-up {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .trend-down {
+            color: #5cb85c;
+            font-weight: bold;
+        }
+
+        /* 圖例樣式 */
+        .legend {
+            line-height: 18px;
+            color: #555;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -706,44 +647,116 @@
             <div class="hero-overlay">
                 <h1>「糧」心大數據</h1>
             </div>
-            <!-- 這裡放置你的圖片，或是用 CSS 背景圖 -->
             <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                 alt="Sustainable Food" class="hero-img">
         </div>
         <div class="info-container">
-            <h2 style="text-align:center; color: #777; margin-bottom:30px; font-weight: 400;">飢餓觀察站</h2>
+            <h2
+                style="text-align: center; color: #222; margin-bottom: 40px; font-weight: 700; font-size: 28px; font-family: sans-serif;">
+                迎戰極端氣候！「勝食」數位革命全面啟動
+            </h2>
 
-            <div class="news-placeholder">
-                <h3>[ 此處展示 2026 氣候變遷與永續農糧新聞 ]</h3>
+            <div class="news-placeholder"
+                style="text-align: left; font-size: 16px; line-height: 1.8; color: #333; font-family: sans-serif;">
+
+                <p
+                    style="font-size: 18px; font-weight: 600; color: #111; margin-top: -30px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+                    以資訊科技實踐 SDG 2 農業與糧食韌性
+                </p>
+
+                <p style="margin-bottom: 10px;">
+                    2026年，全球農業正面臨氣候變遷的嚴峻考驗。暴雨、高溫與乾旱導致產量大幅波動，威脅著人類的糧食安全。然而，氣候危機的解方不僅在於田間的耕作技術，更在於大眾的認知普及與後端的分配優化。
+                </p>
+
+                <p style="margin-bottom: 30px;">
+                    為此，本團隊開發 <span style="color: #2e7d32; font-weight: 700;">「糧心大數據」</span>
+                    平台，運用數位力量解決糧食系統中資訊不對稱與剩食的荒謬矛盾，具體實踐 SDG 2（消除飢餓、達成糧食安全、促進永續農業） 的核心願景。
+                </p>
+
+                <p
+                    style="font-size: 18px; font-weight: 600; color: #111; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+                    核心應用：四大數位科技翻轉糧食危機
+                </p>
+
+                <p style="margin-bottom: 10px;">
+                    為了突破大眾對糧食危機認知與日常脫節的困境，本平台由四大數位應用驅動，將科技轉化為具備感知價值的互動體驗：
+                </p>
+
+                <p style="margin-bottom: 10px;">
+                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">感官覺醒 ｜ 全球飢餓地圖</span>
+                    <span
+                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
+                        SDG 2.1 消除飢餓</span><br>
+                    利用地理資訊系統（GIS）概念，將枯燥的聯合國數據轉化為色彩感官體驗。透過網頁前端技術，以顏色深淺直觀呈現各國營養不良的嚴重程度，讓使用者一眼看清氣候災變下的糧食危機，喚起公民意識。
+                </p>
+
+                <p style="margin-bottom: 10px;">
+                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">情感共鳴 ｜ 剩食計算機</span>
+                    <span
+                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
+                        SDG 2.2 翻轉分配矛盾</span><br>
+                    面對「全球逾八億人遭受長期飢餓，消費端卻有三分之一糧食遭到浪費」的極端悖論，平台透過參數化表單與運算邏輯，將使用者日常浪費的卡路里，即時轉譯為「飢餓地區孩童的一餐」，並輔以天平傾斜的動態視覺特效，以直觀的心理衝擊引導大眾正視分配不均的現實。
+                </p>
+
+                <p style="margin-bottom: 10px;">
+                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">知識扎根 ｜ 惜食小學堂</span>
+                    <span
+                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
+                        SDG 2.4 促進永續農業認知</span><br>
+                    為了提升消費端對永續生產的認同，本團隊設計了遊戲化問答。讓使用者在互動中，深入了解氣候變遷對農業產量的衝擊、低碳農產品標籤及草生栽培等土地友善耕作知識，讓永續教育在消費端扎根。
+                </p>
+
+                <p style="margin-bottom: 30px;">
+                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">端點實踐 ｜ AI 惜食食譜產生器</span>
+                    <span
+                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
+                        SDG 2.c 穩定食物市場與端點減廢</span><br>
+                    平台更具備即時落實減廢的行動力。透過串接大型語言模型 API，使用者只需輸入冰箱殘餘食材，系統便能即時生成惜食料理步驟，直接破解家庭端剩食痛點，將「剩食」完美轉化為「勝食」。
+                </p>
+
+                <p
+                    style="font-size: 18px; font-weight: 600; color: #111; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+                    運用科技築起更公平的糧食安全防線
+                </p>
+
+                <p style="margin-bottom: -25px;">
+                    永續農業與糧食革命，不再只是農夫的責任。本團隊透過此資訊平台，串聯全球數據與大眾的日常餐桌，減少無謂的浪費，將資源精準導向需要的地方。運用數位力量築起更穩固、更公平且更具氣候韌性的糧食安全防線。
+                </p>
+            </div>
+            <div class="info-container">
+                <h2 style="text-align:center; color: #777; margin-bottom:30px; font-weight: 400;">飢餓觀察站</h2>
+
+                <div class="news-placeholder">
+                    <h3>[ 此處展示 2026 氣候變遷與永續農糧新聞 ]</h3>
+                </div>
+
+                <div class="cta-container">
+                    <button class="btn-cta" onclick="showPage('calculator')">
+                        <span class="icon">⚖️</span> 剩食計算機
+                    </button>
+                    <button class="btn-cta quiz-theme" onclick="showPage('quiz')">
+                        <span class="icon">💡</span> 惜食小學堂
+                    </button>
+                    <button class="btn-cta secondary" onclick="showPage('map-page')">
+                        <span class="icon">🌍</span> 全球飢餓地圖
+                    </button>
+                    <button class="btn-cta" id="aiRecipeBtn" style="background-color: #708a69; color: white;">
+                        <span class="icon">🌱</span> AI 惜食食譜產生器
+                    </button>
+                </div>
             </div>
 
-            <div class="cta-container">
-                <button class="btn-cta" onclick="showPage('calculator')">
-                    <span class="icon">⚖️</span> 剩食計算機
-                </button>
-                <button class="btn-cta quiz-theme" onclick="showPage('quiz')">
-                    <span class="icon">💡</span> 惜食小學堂
-                </button>
-                <button class="btn-cta secondary" onclick="showPage('map')">
-                    <span class="icon">🌍</span> 全球飢餓地圖
-                </button>
-                <button class="btn-cta" id="aiRecipeBtn" style="background-color: #708a69; color: white;">
-                    <span class="icon">🌱</span> AI 惜食食譜產生器
-                </button>
+            <div class="petition-section">
+                <h2>微型連署</h2>
+                <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
+
+                <!-- 1. 這裡幫按鈕加了 id="pledgeBtn"，以便後面用 JS 控制它變灰 -->
+                <button id="pledgeBtn" class="btn-promise" onclick="incrementCounter()">我承諾</button>
+
+                <div class="counter-container" style="margin-top:20px;">
+                    目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
+                </div>
             </div>
-        </div>
-
-        <div class="petition-section">
-            <h2>微型連署</h2>
-            <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
-
-            <!-- 1. 這裡幫按鈕加了 id="pledgeBtn"，以便後面用 JS 控制它變灰 -->
-            <button id="pledgeBtn" class="btn-promise" onclick="incrementCounter()">我承諾</button>
-
-            <div class="counter-container" style="margin-top:20px;">
-                目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
-            </div>
-        </div>
     </section>
 
     <!-- 計算機頁面 -->
@@ -847,95 +860,92 @@
     </section>
 
     <!-- 地圖頁面 -->
-    <section id="map" class="page-content">
-        <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
-        <h1 style="text-align:center; color: var(--primary-color); margin-bottom:10px;">全球飢餓狀況地圖</h1>
-        <p style="text-align:center; color:#888; margin-bottom:20px;">2026 全球營養不良人口分佈圖 </p>
-        <div class="map-container" style="text-align: center;">
-            <div id="map-tooltip" class="map-tooltip"></div>
+    <div id="map-page" class="page-content" style="display: none;">
 
-            <div style="position: relative; display: inline-block;">
-                <img src="https://www.eion.com.tw/Blogger/illustration/world-map/world-map-borders.png" alt="全球地圖"
-                    style="width: 100%; max-width: 900px; border-radius: 10px;">
+        <div class="header">
+            <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
+            <h1>全球飢餓地圖</h1>
+            <p>點擊地圖區域，查看各國營養不良人口比例與飢餓指數</p>
+        </div>
 
-                <div class="map-point" style="top: 30%; left: 20%;" onmouseover="showTip('北美', '2.5%', '持平')"
-                    onmouseout="hideTip()"></div>
-                <div class="map-point" style="top: 70%; left: 30%;" onmouseover="showTip('拉丁美洲', '8.6%', '↑ 0.3%')"
-                    onmouseout="hideTip()"></div>
-                <div class="map-point" style="top: 60%; left: 50%;" onmouseover="showTip('次撒哈拉非洲', '24.9%', '↑ 1.2%')"
-                    onmouseout="hideTip()"></div>
-                <div class="map-point" style="top: 40%; left: 75%;" onmouseover="showTip('南亞', '16.4%', '↓ 0.5%')"
-                    onmouseout="hideTip()"></div>
-            </div>
+        <div id="map" style="height: 70vh; width: 100%;"></div>
 
-            <div class="map-legend">
-                <div class="legend-item"><span class="box level-4"></span> 非常嚴重 (>25%)</div>
-                <div class="legend-item"><span class="box level-3"></span> 嚴重 (15-25%)</div>
-                <div class="legend-item"><span class="box level-2"></span> 中度 (5-15%)</div>
-                <div class="legend-item"><span class="box level-1"></span> 穩定 (<5%)< /div>
-                </div>
-            </div>
-            <script>
-                // --- 通用頁面切換 ---
-                function showPage(pageId) {
-                    document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
-                    const target = document.getElementById(pageId);
-                    if (target) target.style.display = 'block';
-                    window.scrollTo(0, 0);
-                }
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-                // --- 計算機邏輯 ---
-                function updateRatio(val) { document.getElementById('ratio-text').innerText = val; }
 
-                function runCalc() {
-                    const checkboxes = document.querySelectorAll('input[name="food-type"]:checked');
-                    const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
-                    const weight = parseFloat(document.getElementById('food-weight').value);
+    <script>
+        // --- 通用頁面切換（已加入地圖破圖修正） ---
+        function showPage(pageId) {
+            // 1. 隱藏所有帶有 .page-content 的頁面
+            document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
 
-                    if (checkboxes.length === 0) { alert("請至少勾選一個食物類別！"); return; }
-                    if (isNaN(weight) || weight <= 0) { alert("請輸入正確的食物總重！"); return; }
+            // 2. 顯示當前點擊的目標頁面
+            const target = document.getElementById(pageId);
+            if (target) target.style.display = 'block';
+            window.scrollTo(0, 0);
 
-                    let sumDensity = 0;
-                    checkboxes.forEach(cb => { sumDensity += parseFloat(cb.value); });
-                    const avgDensity = sumDensity / checkboxes.length;
+            // 3. 【核心修正】如果使用者點進地圖頁，強迫原本隱藏的地圖重新整理尺寸，解決全白或破圖問題
+            if (pageId === 'map-page' && typeof map !== 'undefined' && map !== null) {
+                setTimeout(() => {
+                    map.invalidateSize();    // 叫醒地圖
+                    map.setView([20, 0], 2);  // 重新對齊世界中心點
+                }, 200); // 延遲 0.2 秒等網頁畫面完全展開
+            }
+        }
 
-                    const kcal = (weight * ratio * avgDensity).toFixed(1);
-                    const childMealCalories = 400;
-                    const childrenCount = (kcal / childMealCalories).toFixed(1);
+        // --- 計算機邏輯 ---
+        function updateRatio(val) { document.getElementById('ratio-text').innerText = val; }
 
-                    document.getElementById('formula-display').style.display = 'block';
-                    document.getElementById('process-text').innerHTML = `
+        function runCalc() {
+            const checkboxes = document.querySelectorAll('input[name="food-type"]:checked');
+            const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
+            const weight = parseFloat(document.getElementById('food-weight').value);
+
+            if (checkboxes.length === 0) { alert("請至少勾選一個食物類別！"); return; }
+            if (isNaN(weight) || weight <= 0) { alert("請輸入正確的食物總重！"); return; }
+
+            let sumDensity = 0;
+            checkboxes.forEach(cb => { sumDensity += parseFloat(cb.value); });
+            const avgDensity = sumDensity / checkboxes.length;
+
+            const kcal = (weight * ratio * avgDensity).toFixed(1);
+            const childMealCalories = 400;
+            const childrenCount = (kcal / childMealCalories).toFixed(1);
+
+            document.getElementById('formula-display').style.display = 'block';
+            document.getElementById('process-text').innerHTML = `
                 <strong>計算公式明細：</strong><br>
                 食物重量 (${weight}g) × 浪費比例 (${(ratio * 100)}%) × 平均密度 (${avgDensity.toFixed(2)} kcal/g) = <strong>${kcal} kcal</strong>
             `;
 
-                    // 💥 關鍵修改：讓天平永遠偏向左邊 (角度限制在 +15度 到 +45度 之間)
-                    // 即使 ratio 是 0 (沒浪費)，也依然傾斜 15 度，代表隱形資源債
-                    const angle = -15 - (ratio * 30);
+            // 💥 關鍵修改：讓天平永遠偏向左邊 (角度限制在 +15度 到 +45度 之間)
+            // 即使 ratio 是 0 (沒浪費)，也依然傾斜 15 度，代表隱形資源債
+            const angle = -15 - (ratio * 30);
 
-                    const beam = document.getElementById('balance-beam');
-                    const leftPlate = document.getElementById('left-plate');
-                    const rightPlate = document.getElementById('right-plate');
+            const beam = document.getElementById('balance-beam');
+            const leftPlate = document.getElementById('left-plate');
+            const rightPlate = document.getElementById('right-plate');
 
-                    beam.style.transform = `rotate(${angle}deg)`;
-                    leftPlate.style.transform = `rotate(${-angle}deg)`;
-                    rightPlate.style.transform = `rotate(${-angle}deg)`;
+            beam.style.transform = `rotate(${angle}deg)`;
+            leftPlate.style.transform = `rotate(${-angle}deg)`;
+            rightPlate.style.transform = `rotate(${-angle}deg)`;
 
-                    document.getElementById('result-msg').innerHTML = `
+            document.getElementById('result-msg').innerHTML = `
                 你的一餐浪費了 <span style="font-size:1.4rem; color:#e67e22; font-weight:900;">${kcal}</span> 大卡<br>
                 <span style="color:#e76f51; font-size:1.1rem; display:block; margin-top:8px; font-weight:700;">
                     ⚠️ 這等於奪走了 <span style="font-size:1.6rem; text-decoration:underline;">${childrenCount}</span> 個飢餓地區兒童一餐的溫飽！
                 </span>
             `;
-                }
+        }
 
-                // ==========================================
-                // 🚀 結合版：由網頁內建按鈕觸發的 AI 對話框
-                // ==========================================
-                window.addEventListener('load', () => {
-                    // 1. 建立升級版的 CSS 樣式（已移除右下角小草懸浮鈕樣式）
-                    const style = document.createElement('style');
-                    style.innerHTML = `
+        // ==========================================
+        // 🚀 結合版：由網頁內建按鈕觸發的 AI 對話框
+        // ==========================================
+        window.addEventListener('load', () => {
+            // 1. 建立升級版的 CSS 樣式（已移除右下角小草懸浮鈕樣式）
+            const style = document.createElement('style');
+            style.innerHTML = `
         /* 🟢 對話框主體（位置調整為固定在畫面中央偏右下，或你要維持置中都可以） */
         .chat-container {
             width: 360px !important;
@@ -946,7 +956,10 @@
             display: none !important; /* 初始隱藏，點擊按鈕才顯示 */
             flex-direction: column !important;
             overflow: hidden !important;
-            position: fixed !important;   
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
             
             /* 🔥 讓它優雅地浮動在畫面偏右下的位置 */
             bottom: 30px !important;      
@@ -990,13 +1003,13 @@
         #userInput { flex: 1 !important; padding: 8px 12px !important; border: 1px solid #ddd !important; border-radius: 20px !important; outline: none !important; font-size: 0.9rem !important; cursor: text !important; }
         .chat-btn { background-color: #8fa887 !important; color: white !important; border: none !important; padding: 0 15px !important; margin-left: 8px !important; border-radius: 20px !important; cursor: pointer !important; font-size: 0.9rem !important; }
     `;
-                    document.head.appendChild(style);
+            document.head.appendChild(style);
 
-                    // 2. 注入對話框主體（插在 body 最前面，原先的 chat-launcher-btn 已經拿掉了）
-                    const chatDiv = document.createElement('div');
-                    chatDiv.className = 'chat-container';
-                    chatDiv.id = 'chatContainer';
-                    chatDiv.innerHTML = `
+            // 2. 注入對話框主體（插在 body 最前面，原先的 chat-launcher-btn 已經拿掉了）
+            const chatDiv = document.createElement('div');
+            chatDiv.className = 'chat-container';
+            chatDiv.id = 'chatContainer';
+            chatDiv.innerHTML = `
         <div class="chat-header">
             <h3 style="margin: 0; font-size: 1.1rem; color: white;">🌱 AI 惜食食譜產生器</h3>
             <p style="margin: 3px 0 0 0; font-size: 0.75rem; color: white; opacity: 0.9;">讓我幫你的冰箱剩食變美味！</p>
@@ -1011,219 +1024,395 @@
         </div>
     `;
 
-                    if (document.body.firstChild) {
-                        document.body.insertBefore(chatDiv, document.body.firstChild);
-                    } else {
-                        document.body.appendChild(chatDiv);
-                    }
+            if (document.body.firstChild) {
+                document.body.insertBefore(chatDiv, document.body.firstChild);
+            } else {
+                document.body.appendChild(chatDiv);
+            }
 
-                    // 3. 綁定開關邏輯
-                    const chatContainer = document.getElementById('chatContainer');
-                    const aiRecipeBtn = document.getElementById('aiRecipeBtn');
+            // 3. 綁定開關邏輯
+            const chatContainer = document.getElementById('chatContainer');
+            const aiRecipeBtn = document.getElementById('aiRecipeBtn');
 
-                    // 💥 連接新按鈕：點擊排版區的「AI 惜食食譜」按鈕，展開或收合對話框
-                    if (aiRecipeBtn) {
-                        aiRecipeBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            chatContainer.classList.toggle('active');
-                            if (chatContainer.classList.contains('active')) {
-                                setTimeout(() => document.getElementById('userInput').focus(), 100);
-                            }
-                        });
-                    }
-
-                    // 點擊對話框右上角的叉叉：關閉對話框
-                    document.getElementById('closeChat').addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        chatContainer.classList.remove('active');
-                    });
-
-                    // 4. 點擊輸入框對焦修正
-                    const inputEl = document.getElementById('userInput');
-                    if (inputEl) {
-                        inputEl.addEventListener('mousedown', (e) => {
-                            e.stopPropagation();
-                            inputEl.focus();
-                        });
-                    }
-
-                    // 5. 綁定發送按鈕
-                    const sendBtnEl = document.getElementById('sendBtn');
-                    if (sendBtnEl) {
-                        sendBtnEl.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            sendMessage();
-                        });
-                    }
-
-                    if (inputEl) {
-                        inputEl.addEventListener('keydown', (e) => {
-                            if (e.key === 'Enter') {
-                                e.stopPropagation();
-                                sendMessage();
-                            }
-                        });
+            // 💥 連接新按鈕：點擊排版區的「AI 惜食食譜」按鈕，展開或收合對話框
+            if (aiRecipeBtn) {
+                aiRecipeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    chatContainer.classList.toggle('active');
+                    if (chatContainer.classList.contains('active')) {
+                        setTimeout(() => document.getElementById('userInput').focus(), 100);
                     }
                 });
+            }
 
-                // 6. 發送訊息核心邏輯（維持在外層不變，請記得檢查裡面的 fetch 網址是否為你的永久網址）
-                async function sendMessage() {
-                    const chatBox = document.getElementById('chatBox');
-                    const userInput = document.getElementById('userInput');
-                    const text = userInput.value.trim();
-                    if (!text) return;
+            // 點擊對話框右上角的叉叉：關閉對話框
+            document.getElementById('closeChat').addEventListener('click', (e) => {
+                e.stopPropagation();
+                chatContainer.classList.remove('active');
+            });
 
-                    appendMessage(text, 'user-message');
-                    userInput.value = '';
+            // 4. 點擊輸入框對焦修正
+            const inputEl = document.getElementById('userInput');
+            if (inputEl) {
+                inputEl.addEventListener('mousedown', (e) => {
+                    e.stopPropagation();
+                    inputEl.focus();
+                });
+            }
 
-                    const loadingId = appendMessage('正在為您規劃惜食食譜中...', 'ai-message');
+            // 5. 綁定發送按鈕
+            const sendBtnEl = document.getElementById('sendBtn');
+            if (sendBtnEl) {
+                sendBtnEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sendMessage();
+                });
+            }
 
-                    try {
-                        const response = await fetch('https://percolate-remission-hardy.ngrok-free.dev/api/recipe', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ ingredients: text })
-                        });
+            if (inputEl) {
+                inputEl.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.stopPropagation();
+                        sendMessage();
+                    }
+                });
+            }
+        });
 
-                        const data = await response.json();
-                        document.getElementById(loadingId).remove();
+        // 6. 發送訊息核心邏輯（維持在外層不變，請記得檢查裡面的 fetch 網址是否為你的永久網址）
+        async function sendMessage() {
+            const chatBox = document.getElementById('chatBox');
+            const userInput = document.getElementById('userInput');
+            const text = userInput.value.trim();
+            if (!text) return;
 
-                        if (data.recipe) {
-                            const formattedRecipe = data.recipe.replace(/\n/g, '<br>');
-                            appendMessage(formattedRecipe, 'ai-message', true);
-                        } else {
-                            appendMessage('抱歉，產生食譜時出了點問題。', 'ai-message');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        document.getElementById(loadingId).innerText = '無法連線到後端伺服器，請確認 Python app.py 和 ngrok 有沒有啟動！';
+            appendMessage(text, 'user-message');
+            userInput.value = '';
+
+            const loadingId = appendMessage('正在為您規劃惜食食譜中...', 'ai-message');
+
+            try {
+                const response = await fetch('https://percolate-remission-hardy.ngrok-free.dev/api/recipe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ingredients: text })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+
+                if (data.recipe) {
+                    const formattedRecipe = data.recipe.replace(/\n/g, '<br>');
+                    appendMessage(formattedRecipe, 'ai-message', true);
+                } else {
+                    appendMessage('抱歉，產生食譜時出了點問題。', 'ai-message');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById(loadingId).innerText = '無法連線到後端伺服器，請確認 Python app.py 和 ngrok 有沒有啟動！';
+            }
+        }
+
+        function appendMessage(text, className, isHTML = false) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            const id = 'msg-' + Date.now();
+            messageDiv.id = id;
+            messageDiv.className = `message ${className}`;
+
+            if (isHTML) {
+                messageDiv.innerHTML = text;
+            } else {
+                messageDiv.innerText = text;
+            }
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return id;
+        }
+
+        // 1. 初始化地圖 (設定中心點與縮放層級)
+        var map = L.map('map', {
+            minZoom: 2,
+            maxBounds: [[-90, -180], [90, 180]],
+            maxBoundsViscosity: 1.0
+        }).setView([20, 0], 2);
+
+        // 2. 加入底圖 (使用較簡約的風格以突顯色彩)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            noWrap: true
+        }).addTo(map);
+
+        // 3. 色階邏輯 (對應圖片中的紅、橙、黃、綠)
+        function getColor(d) {
+            return d > 30 ? '#BD0026' : // 深紅
+                d > 20 ? '#E31A1C' : // 紅
+                    d > 10 ? '#FEB24C' : // 橙/黃
+                        d > 5 ? '#FED976' : // 淺黃
+                            '#2E8B57'; // 綠 (安全)
+        }
+
+        // 4. 定義樣式
+        function getCountryName(props) {
+            return props.ADMIN || props.name || props.NAME || props.name_long;
+        }
+
+        function style(feature) {
+            const geoName = getCountryName(feature.properties);
+            const owidName = countryNameMap[geoName] || geoName;
+            const value = hungerData[owidName];
+
+            return {
+                fillColor: value !== undefined ? getColor(value) : '#cccccc',
+                weight: 1,
+                opacity: 1,
+                color: 'white',
+                fillOpacity: 0.7
+            };
+        }
+
+        // GeoJSON 與 OWID 國家名稱對照表
+        const countryNameMap = {
+            "United States of America": "United States",
+            "Russian Federation": "Russia",
+            "Viet Nam": "Vietnam"
+        };
+
+        // 匯入 OWID 真實資料 + GeoJSON 地圖資料
+        var hungerData = {};
+        var geojson;
+
+        Promise.all([
+            fetch('https://ourworldindata.org/grapher/prevalence-of-undernourishment.csv?v=1&csvType=full&useColumnShortNames=false')
+                .then(response => response.text()),
+
+            fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+                .then(response => response.json())
+        ]).then(([csvText, geoData]) => {
+            const rows = csvText.split('\n').slice(1);
+
+            rows.forEach(row => {
+                const cols = row.split(',');
+                const country = cols[0];
+                const year = Number(cols[2]);
+                const value = cols[3];
+
+                if (value && !isNaN(year)) {
+                    if (!hungerData[country] || year >= hungerData[country].year) {
+                        hungerData[country] = {
+                            year: year,
+                            value: parseFloat(value)
+                        };
                     }
                 }
+            });
 
-                function appendMessage(text, className, isHTML = false) {
-                    const chatBox = document.getElementById('chatBox');
-                    const messageDiv = document.createElement('div');
-                    const id = 'msg-' + Date.now();
-                    messageDiv.id = id;
-                    messageDiv.className = `message ${className}`;
+            Object.keys(hungerData).forEach(country => {
+                hungerData[country] = hungerData[country].value;
+            });
 
-                    if (isHTML) {
-                        messageDiv.innerHTML = text;
-                    } else {
-                        messageDiv.innerText = text;
-                    }
+            console.log("飢餓資料載入完成", hungerData);
 
-                    chatBox.appendChild(messageDiv);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                    return id;
-                }
+            geojson = L.geoJson(geoData, {
+                style: style,
+                onEachFeature: onEachFeature
+            }).addTo(map);
+        });
 
-            </script>
-
-            <script type="module">
-                import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-                import { getDatabase, ref, onValue, runTransaction, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-                // ====== 1. Firebase 初始化配置 ======
-                const firebaseConfig = {
-                    apiKey: "AIzaSyA81lxUpjZKpoju-ECSfsOYwqZC_aoSnPI",
-                    authDomain: "petition-count.firebaseapp.com",
-                    databaseURL: "https://petition-count-default-rtdb.firebaseio.com", // 加上你的 RTDB 網址確保連線正確
-                    projectId: "petition-count",
-                    storageBucket: "petition-count.firebasestorage.app",
-                    messagingSenderId: "185724781337",
-                    appId: "1:185724781337:web:b84a8d60437ca9a500bb88"
-                };
-
-                const app = initializeApp(firebaseConfig);
-                const db = getDatabase(app);
-
-                // ====== 2. 題目測驗變數與邏輯 ======
-                let quizData = []; // 用來存放從 Firebase 抓下來的題目陣列
-                let currentQuizIndex = 0;
-                let hasAnswered = false;
-                let score = 0; // 🎯 修正 1：新增用來記錄答對題數的變數
-
-                // 🎯 修正 2：洗牌函數 (Fisher-Yates Shuffle)，用來隨機打亂題目順序
-                function shuffleArray(array) {
-                    for (let i = array.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [array[i], array[j]] = [array[j], array[i]];
-                    }
-                    return array;
-                }
-
-                function loadQuestion() {
-                    if (quizData.length === 0) return; // 防呆，沒題目就不執行
-
-                    hasAnswered = false;
-                    const qData = quizData[currentQuizIndex];
-                    document.getElementById('quiz-progress').innerText = `第 ${currentQuizIndex + 1} / ${quizData.length} 題`;
-                    document.getElementById('question-text').innerText = qData.q;
-
-                    const optionsContainer = document.getElementById('options-container');
-                    optionsContainer.innerHTML = '';
-
-                    qData.o.forEach((optText, index) => {
-                        const btn = document.createElement('button');
-                        btn.className = 'btn-option';
-                        btn.innerText = optText;
-                        btn.onclick = () => window.checkAnswer(index, btn); // 改用 window 呼叫
-                        optionsContainer.appendChild(btn);
+        // 5. 互動功能與彈窗
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: function (e) {
+                    var l = e.target;
+                    l.setStyle({
+                        weight: 2,
+                        color: '#666',
+                        fillOpacity: 0.9
                     });
+                },
 
-                    document.getElementById('quiz-feedback').style.display = 'none';
-                    document.getElementById('next-btn').style.display = 'none';
-                }
+                mouseout: function (e) {
+                    geojson.resetStyle(e.target);
+                },
 
-                // 掛載 checkAnswer 到 window 上，讓動態生成的 button 點擊事件能找到它
-                window.checkAnswer = function (selectedIndex, clickedBtn) {
-                    if (hasAnswered) return;
-                    hasAnswered = true;
+                click: function (e) {
+                    const props = e.target.feature.properties;
 
-                    const qData = quizData[currentQuizIndex];
-                    const feedback = document.getElementById('quiz-feedback');
-                    const allBtns = document.querySelectorAll('.btn-option');
+                    const geoName = getCountryName(props);
+                    const owidName = countryNameMap[geoName] || geoName;
 
-                    allBtns.forEach((btn, index) => {
-                        btn.disabled = true;
-                        if (index === qData.a) {
-                            btn.classList.add('correct');
-                        }
-                    });
+                    const value = hungerData[owidName];
 
-                    feedback.style.display = 'block';
-                    if (selectedIndex === qData.a) {
-                        score++; // 🎯 修正 1：答對了，分數加 1
-                        feedback.innerHTML = `<strong>✅ 答對了！</strong><br>${qData.d || ''}`;
-                        feedback.className = "quiz-feedback success";
-                    } else {
-                        clickedBtn.classList.add('wrong');
-                        feedback.innerHTML = `<strong>❌ 答錯了！正確答案是 ${qData.o[qData.a]}</strong><br>${qData.d || ''}`;
-                        feedback.className = "quiz-feedback error";
-                    }
-                    document.getElementById('next-btn').style.display = 'block';
-                }
+                    const rate = value !== undefined
+                        ? (value === 2.5 ? "低於 2.5" : value.toFixed(1))
+                        : "無資料";
 
-                // 掛載 nextQuestion 到 window 上，供 HTML 下一題按鈕呼叫
-                window.nextQuestion = function () {
-                    currentQuizIndex++;
-                    if (currentQuizIndex < quizData.length) {
-                        loadQuestion();
-                    } else {
-                        // 🎯 根據得分範圍 (0~5, 6~10, 11~15) 決定顯示的文字
-                        let feedbackText = "";
+                    let level = "無官方資料";
+                    let explanation = "目前資料庫沒有此國家的營養不良統計資料。";
 
-                        if (score <= 5) {
-                            feedbackText = "再接再厲！食物永續的觀念稍微有點落後，多留意生活中的飲食選擇，你可以做得更好！";
-                        } else if (score <= 10) {
-                            feedbackText = "表現不錯！你已經具備基本的食物永續觀念，再加把勁就能成為環保飲食達人囉！";
+                    if (value !== undefined) {
+                        if (value > 30) {
+                            level = "非常嚴重";
+                            explanation = "此國家營養不良人口比例非常高，代表糧食安全問題相當嚴重。";
+                        } else if (value > 20) {
+                            level = "嚴重";
+                            explanation = "此國家有較高比例人口面臨營養不足，需要較多糧食與社會支持。";
+                        } else if (value > 10) {
+                            level = "中度風險";
+                            explanation = "此國家仍有一定比例人口處於營養不足狀態。";
+                        } else if (value > 5) {
+                            level = "低度風險";
+                            explanation = "此國家營養不良人口比例偏低，但仍有部分人口需要關注。";
                         } else {
-                            feedbackText = "太厲害了！你擁有非常卓越的食物永續與環保觀念，簡直是守護地球的綠色模範生！";
+                            level = "相對安全";
+                            explanation = "此國家營養不良人口比例較低，整體糧食安全狀況相對穩定。";
                         }
+                    }
 
-                        // 結束畫面調整，動態帶入得分與對應文字
-                        document.getElementById('quiz-box').innerHTML = `
+                    const popupContent = `
+        <div class="info">
+            <h4>${geoName || "選取區域"}</h4>
+            <b>營養不良人口比例:</b> ${rate}${rate === "無資料" ? "" : "%"}<br/>
+            <b>飢餓風險等級:</b> ${level}<br/>
+            <b>資料來源:</b> Our World in Data / FAO<br/>
+            <hr/>
+            <b>判讀:</b><br/>
+            ${explanation}
+        </div>
+    `;
+
+                    L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent(popupContent)
+                        .openOn(map);
+                }
+            });
+        }
+
+        // 6. 加入圖例 (Legend)
+        var legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 5, 10, 20, 30],
+                labels = ['<strong>飢餓程度</strong>'];
+
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%<br>' : '+%');
+            }
+            return div;
+        };
+        legend.addTo(map);
+
+
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // ====== 1. Firebase 初始化配置 ======
+        const firebaseConfig = {
+            apiKey: "AIzaSyA81lxUpjZKpoju-ECSfsOYwqZC_aoSnPI",
+            authDomain: "petition-count.firebaseapp.com",
+            databaseURL: "https://petition-count-default-rtdb.firebaseio.com", // 加上你的 RTDB 網址確保連線正確
+            projectId: "petition-count",
+            storageBucket: "petition-count.firebasestorage.app",
+            messagingSenderId: "185724781337",
+            appId: "1:185724781337:web:b84a8d60437ca9a500bb88"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ====== 2. 題目測驗變數與邏輯 ======
+        let quizData = []; // 用來存放從 Firebase 抓下來的題目陣列
+        let currentQuizIndex = 0;
+        let hasAnswered = false;
+        let score = 0; // 🎯 修正 1：新增用來記錄答對題數的變數
+
+        // 🎯 修正 2：洗牌函數 (Fisher-Yates Shuffle)，用來隨機打亂題目順序
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadQuestion() {
+            if (quizData.length === 0) return; // 防呆，沒題目就不執行
+
+            hasAnswered = false;
+            const qData = quizData[currentQuizIndex];
+            document.getElementById('quiz-progress').innerText = `第 ${currentQuizIndex + 1} / ${quizData.length} 題`;
+            document.getElementById('question-text').innerText = qData.q;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            qData.o.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerText = optText;
+                btn.onclick = () => window.checkAnswer(index, btn); // 改用 window 呼叫
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        // 掛載 checkAnswer 到 window 上，讓動態生成的 button 點擊事件能找到它
+        window.checkAnswer = function (selectedIndex, clickedBtn) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            const qData = quizData[currentQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            const allBtns = document.querySelectorAll('.btn-option');
+
+            allBtns.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === qData.a) {
+                    btn.classList.add('correct');
+                }
+            });
+
+            feedback.style.display = 'block';
+            if (selectedIndex === qData.a) {
+                score++; // 🎯 修正 1：答對了，分數加 1
+                feedback.innerHTML = `<strong>✅ 答對了！</strong><br>${qData.d || ''}`;
+                feedback.className = "quiz-feedback success";
+            } else {
+                clickedBtn.classList.add('wrong');
+                feedback.innerHTML = `<strong>❌ 答錯了！正確答案是 ${qData.o[qData.a]}</strong><br>${qData.d || ''}`;
+                feedback.className = "quiz-feedback error";
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        // 掛載 nextQuestion 到 window 上，供 HTML 下一題按鈕呼叫
+        window.nextQuestion = function () {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                // 🎯 根據得分範圍 (0~5, 6~10, 11~15) 決定顯示的文字
+                let feedbackText = "";
+
+                if (score <= 5) {
+                    feedbackText = "再接再厲！食物永續的觀念稍微有點落後，多留意生活中的飲食選擇，你可以做得更好！";
+                } else if (score <= 10) {
+                    feedbackText = "表現不錯！你已經具備基本的食物永續觀念，再加把勁就能成為環保飲食達人囉！";
+                } else {
+                    feedbackText = "太厲害了！你擁有非常卓越的食物永續與環保觀念，簡直是守護地球的綠色模範生！";
+                }
+
+                // 結束畫面調整，動態帶入得分與對應文字
+                document.getElementById('quiz-box').innerHTML = `
                     <div style="text-align:center; padding:20px;">
                         <h2 style="color:var(--primary-color)">挑戰完成！</h2>
                         <p style="margin:15px 0; font-size: 1.2rem;">
@@ -1235,103 +1424,102 @@
                         <button class="btn-calc" onclick="location.reload()" style="margin-top: 10px;">重新挑戰</button>
                     </div>
                 `;
-                    }
+            }
+        }
+
+        // 從 Firebase 即時獲取題目的功能
+        function fetchQuizData() {
+            const quizRef = ref(db, 'quizData');
+            get(quizRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const rawData = snapshot.val();
+
+                    // 先把 Firebase 的物件轉成普通的陣列
+                    const tempArray = Object.keys(rawData).map(key => rawData[key]);
+
+                    // 🎯 修正 2：呼叫洗牌函數，隨機打亂這份題目陣列
+                    quizData = shuffleArray(tempArray);
+
+                    // 題目資料隨機載入完成後，初始化畫面
+                    loadQuestion();
+                } else {
+                    console.error("Firebase 中找不到 quizData 節點");
+                    document.getElementById('question-text').innerText = "題目載入失敗，請確認資料庫。";
                 }
+            }).catch((error) => {
+                console.error("讀取題目發生錯誤:", error);
+            });
+        }
 
-                // 從 Firebase 即時獲取題目的功能
-                function fetchQuizData() {
-                    const quizRef = ref(db, 'quizData');
-                    get(quizRef).then((snapshot) => {
-                        if (snapshot.exists()) {
-                            const rawData = snapshot.val();
 
-                            // 先把 Firebase 的物件轉成普通的陣列
-                            const tempArray = Object.keys(rawData).map(key => rawData[key]);
+        // ====== 3. 連署計數器邏輯 ======
+        const pledgeRef = ref(db, 'pledge_total');
+        const pledgeBtn = document.getElementById('pledgeBtn');
 
-                            // 🎯 修正 2：呼叫洗牌函數，隨機打亂這份題目陣列
-                            quizData = shuffleArray(tempArray);
-
-                            // 題目資料隨機載入完成後，初始化畫面
-                            loadQuestion();
-                        } else {
-                            console.error("Firebase 中找不到 quizData 節點");
-                            document.getElementById('question-text').innerText = "題目載入失敗，請確認資料庫。";
-                        }
-                    }).catch((error) => {
-                        console.error("讀取題目發生錯誤:", error);
-                    });
+        function checkPledgeStatus() {
+            if (localStorage.getItem('has_pledged') === 'true') {
+                if (pledgeBtn) {
+                    pledgeBtn.innerText = '感謝您的承諾';
+                    pledgeBtn.disabled = true;
+                    pledgeBtn.style.opacity = '0.6';
+                    pledgeBtn.style.cursor = 'not-allowed';
                 }
+            }
+        }
 
+        // 監聽雲端連署總數
+        onValue(pledgeRef, (snapshot) => {
+            const data = snapshot.val() || 0;
+            const countEl = document.getElementById('count');
+            if (countEl) countEl.innerText = data.toLocaleString();
+        });
 
-                // ====== 3. 連署計數器邏輯 ======
-                const pledgeRef = ref(db, 'pledge_total');
-                const pledgeBtn = document.getElementById('pledgeBtn');
+        // 掛載連署點擊事件到 window 上，供 HTML 的 onclick="incrementCounter()" 呼叫
+        window.incrementCounter = function () {
+            if (localStorage.getItem('has_pledged') === 'true') return;
 
-                function checkPledgeStatus() {
-                    if (localStorage.getItem('has_pledged') === 'true') {
-                        if (pledgeBtn) {
-                            pledgeBtn.innerText = '感謝您的承諾';
-                            pledgeBtn.disabled = true;
-                            pledgeBtn.style.opacity = '0.6';
-                            pledgeBtn.style.cursor = 'not-allowed';
-                        }
-                    }
+            localStorage.setItem('has_pledged', 'true');
+            checkPledgeStatus();
+
+            runTransaction(pledgeRef, (currentCount) => {
+                return (currentCount || 0) + 1;
+            }).catch((error) => {
+                console.error("連署失敗：", error);
+                localStorage.removeItem('has_pledged');
+                if (pledgeBtn) {
+                    pledgeBtn.disabled = false;
+                    pledgeBtn.innerText = '我承諾';
+                    pledgeBtn.style.opacity = '1';
+                    pledgeBtn.style.cursor = 'pointer';
                 }
+            });
+        }
 
-                // 監聽雲端連署總數
-                onValue(pledgeRef, (snapshot) => {
-                    const data = snapshot.val() || 0;
-                    const countEl = document.getElementById('count');
-                    if (countEl) countEl.innerText = data.toLocaleString();
-                });
+        // ====== 4. 網頁初始化載入 ======
+        checkPledgeStatus();
+        fetchQuizData();     // 從 Firebase 撈題目
+        if (typeof showPage === 'function') {
+            showPage('home'); // 如果你有原先的換頁邏輯就保留
+        }
+    </script>
+    </div>
 
-                // 掛載連署點擊事件到 window 上，供 HTML 的 onclick="incrementCounter()" 呼叫
-                window.incrementCounter = function () {
-                    if (localStorage.getItem('has_pledged') === 'true') return;
-
-                    localStorage.setItem('has_pledged', 'true');
-                    checkPledgeStatus();
-
-                    runTransaction(pledgeRef, (currentCount) => {
-                        return (currentCount || 0) + 1;
-                    }).catch((error) => {
-                        console.error("連署失敗：", error);
-                        localStorage.removeItem('has_pledged');
-                        if (pledgeBtn) {
-                            pledgeBtn.disabled = false;
-                            pledgeBtn.innerText = '我承諾';
-                            pledgeBtn.style.opacity = '1';
-                            pledgeBtn.style.cursor = 'pointer';
-                        }
-                    });
-                }
-
-                // ====== 4. 網頁初始化載入 ======
-                checkPledgeStatus();
-                fetchQuizData();     // 從 Firebase 撈題目
-                if (typeof showPage === 'function') {
-                    showPage('home'); // 如果你有原先的換頁邏輯就保留
-                }
-            </script>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h3 style="margin: 0; font-size: 1.1rem;">🌱 AI 惜食食譜產生器</h3>
+            <p style="margin: 3px 0 0 0; font-size: 0.75rem; opacity: 0.9;">讓我幫你的冰箱剩食變美味！</p>
         </div>
 
-        <div class="chat-container">
-            <div class="chat-header">
-                <h3 style="margin: 0; font-size: 1.1rem;">🌱 AI 惜食食譜產生器</h3>
-                <p style="margin: 3px 0 0 0; font-size: 0.75rem; opacity: 0.9;">讓我幫你的冰箱剩食變美味！</p>
+        <div class="chat-box" id="chatBox">
+            <div class="message ai-message">
+                你好！請告訴我你手邊有哪些剩餘的食材？（例如：剩飯、快枯萎的高麗菜、半塊雞胸肉）
             </div>
+        </div>
 
-            <div class="chat-box" id="chatBox">
-                <div class="message ai-message">
-                    你好！請告訴我你手邊有哪些剩餘的食材？（例如：剩飯、快枯萎的高麗菜、半塊雞胸肉）
-                </div>
-            </div>
-
-            <div class="input-area">
-                <input type="text" id="userInput" placeholder="請輸入食材..."
-                    onkeydown="if(event.key==='Enter') sendMessage()">
-                <button class="chat-btn" onclick="sendMessage()">發送</button>
-            </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="請輸入食材..." onkeydown="if(event.key==='Enter') sendMessage()">
+            <button class="chat-btn" onclick="sendMessage()">發送</button>
+        </div>
 </body>
 
 </html>
