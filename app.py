@@ -33,9 +33,6 @@ firebase_config = {
 firebase = pyrebase.initialize_app(firebase_config)
 db = firebase.database()
 
-# 2. 初始化 Gemini 客戶端
-client = genai.Client()
-
 @app.route('/api/recipe', methods=['POST'])
 def get_recipe():
     try:
