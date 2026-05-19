@@ -723,40 +723,35 @@
                     永續農業與糧食革命，不再只是農夫的責任。本團隊透過此資訊平台，串聯全球數據與大眾的日常餐桌，減少無謂的浪費，將資源精準導向需要的地方。運用數位力量築起更穩固、更公平且更具氣候韌性的糧食安全防線。
                 </p>
             </div>
-            <div class="info-container">
-                <h2 style="text-align:center; color: #777; margin-bottom:30px; font-weight: 400;">飢餓觀察站</h2>
 
-                <div class="news-placeholder">
-                    <h3>[ 此處展示 2026 氣候變遷與永續農糧新聞 ]</h3>
-                </div>
 
-                <div class="cta-container">
-                    <button class="btn-cta" onclick="showPage('calculator')">
-                        <span class="icon">⚖️</span> 剩食計算機
-                    </button>
-                    <button class="btn-cta quiz-theme" onclick="showPage('quiz')">
-                        <span class="icon">💡</span> 惜食小學堂
-                    </button>
-                    <button class="btn-cta secondary" onclick="showPage('map-page')">
-                        <span class="icon">🌍</span> 全球飢餓地圖
-                    </button>
-                    <button class="btn-cta" id="aiRecipeBtn" style="background-color: #708a69; color: white;">
-                        <span class="icon">🌱</span> AI 惜食食譜產生器
-                    </button>
-                </div>
+            <div class="cta-container">
+                <button class="btn-cta" onclick="showPage('calculator')">
+                    <span class="icon">⚖️</span> 剩食計算機
+                </button>
+                <button class="btn-cta quiz-theme" onclick="showPage('quiz')">
+                    <span class="icon">💡</span> 惜食小學堂
+                </button>
+                <button class="btn-cta secondary" onclick="showPage('map-page')">
+                    <span class="icon">🌍</span> 全球飢餓地圖
+                </button>
+                <button class="btn-cta" id="aiRecipeBtn" style="background-color: #708a69; color: white;">
+                    <span class="icon">🌱</span> AI 惜食食譜產生器
+                </button>
             </div>
+        </div>
 
-            <div class="petition-section">
-                <h2>微型連署</h2>
-                <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
+        <div class="petition-section">
+            <h2>微型連署</h2>
+            <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
 
-                <!-- 1. 這裡幫按鈕加了 id="pledgeBtn"，以便後面用 JS 控制它變灰 -->
-                <button id="pledgeBtn" class="btn-promise" onclick="incrementCounter()">我承諾</button>
+            <!-- 1. 這裡幫按鈕加了 id="pledgeBtn"，以便後面用 JS 控制它變灰 -->
+            <button id="pledgeBtn" class="btn-promise" onclick="incrementCounter()">我承諾</button>
 
-                <div class="counter-container" style="margin-top:20px;">
-                    目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
-                </div>
+            <div class="counter-container" style="margin-top:20px;">
+                目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
             </div>
+        </div>
     </section>
 
     <!-- 計算機頁面 -->
@@ -1310,30 +1305,18 @@
     </script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, runTransaction, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        // 🟢 徹底移除 Firebase 所有前端 SDK 引用，前端金鑰 0 殘留！
 
-        // ====== 1. Firebase 初始化配置 ======
-        const firebaseConfig = {
-            apiKey: "AIzaSyA81lxUpjZKpoju-ECSfsOYwqZC_aoSnPI",
-            authDomain: "petition-count.firebaseapp.com",
-            databaseURL: "https://petition-count-default-rtdb.firebaseio.com", // 加上你的 RTDB 網址確保連線正確
-            projectId: "petition-count",
-            storageBucket: "petition-count.firebasestorage.app",
-            messagingSenderId: "185724781337",
-            appId: "1:185724781337:web:b84a8d60437ca9a500bb88"
-        };
+        // ====== 📌 設定妳的 ngrok 永久網址變數 ======
+        const MY_NGROK_URL = 'https://percolate-remission-hardy.ngrok-free.dev';
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // ====== 2. 題目測驗變數與邏輯 ======
-        let quizData = []; // 用來存放從 Firebase 抓下來的題目陣列
+        // ====== 題目測驗變數與邏輯 ======
+        let quizData = [];
         let currentQuizIndex = 0;
         let hasAnswered = false;
-        let score = 0; // 🎯 修正 1：新增用來記錄答對題數的變數
+        let score = 0;
 
-        // 🎯 修正 2：洗牌函數 (Fisher-Yates Shuffle)，用來隨機打亂題目順序
+        // 洗牌函數 (Fisher-Yates Shuffle)
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1343,7 +1326,7 @@
         }
 
         function loadQuestion() {
-            if (quizData.length === 0) return; // 防呆，沒題目就不執行
+            if (quizData.length === 0) return;
 
             hasAnswered = false;
             const qData = quizData[currentQuizIndex];
@@ -1357,7 +1340,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'btn-option';
                 btn.innerText = optText;
-                btn.onclick = () => window.checkAnswer(index, btn); // 改用 window 呼叫
+                btn.onclick = () => window.checkAnswer(index, btn);
                 optionsContainer.appendChild(btn);
             });
 
@@ -1365,7 +1348,6 @@
             document.getElementById('next-btn').style.display = 'none';
         }
 
-        // 掛載 checkAnswer 到 window 上，讓動態生成的 button 點擊事件能找到它
         window.checkAnswer = function (selectedIndex, clickedBtn) {
             if (hasAnswered) return;
             hasAnswered = true;
@@ -1383,7 +1365,7 @@
 
             feedback.style.display = 'block';
             if (selectedIndex === qData.a) {
-                score++; // 🎯 修正 1：答對了，分數加 1
+                score++;
                 feedback.innerHTML = `<strong>✅ 答對了！</strong><br>${qData.d || ''}`;
                 feedback.className = "quiz-feedback success";
             } else {
@@ -1394,13 +1376,11 @@
             document.getElementById('next-btn').style.display = 'block';
         }
 
-        // 掛載 nextQuestion 到 window 上，供 HTML 下一題按鈕呼叫
         window.nextQuestion = function () {
             currentQuizIndex++;
             if (currentQuizIndex < quizData.length) {
                 loadQuestion();
             } else {
-                // 🎯 根據得分範圍 (0~5, 6~10, 11~15) 決定顯示的文字
                 let feedbackText = "";
 
                 if (score <= 5) {
@@ -1411,7 +1391,6 @@
                     feedbackText = "太厲害了！你擁有非常卓越的食物永續與環保觀念，簡直是守護地球的綠色模範生！";
                 }
 
-                // 結束畫面調整，動態帶入得分與對應文字
                 document.getElementById('quiz-box').innerHTML = `
                     <div style="text-align:center; padding:20px;">
                         <h2 style="color:var(--primary-color)">挑戰完成！</h2>
@@ -1427,33 +1406,28 @@
             }
         }
 
-        // 從 Firebase 即時獲取題目的功能
-        function fetchQuizData() {
-            const quizRef = ref(db, 'quizData');
-            get(quizRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const rawData = snapshot.val();
+        // 🟢 修改後的小學堂撈題：
+        async function fetchQuizData() {
+            try {
+                // 🔥 關鍵修正：在 fetch 裡加上通行證 headers，破解 ngrok 的攔截頁！
+                const response = await fetch(`${MY_NGROK_URL}/api/quiz`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                });
 
-                    // 先把 Firebase 的物件轉成普通的陣列
-                    const tempArray = Object.keys(rawData).map(key => rawData[key]);
-
-                    // 🎯 修正 2：呼叫洗牌函數，隨機打亂這份題目陣列
-                    quizData = shuffleArray(tempArray);
-
-                    // 題目資料隨機載入完成後，初始化畫面
-                    loadQuestion();
-                } else {
-                    console.error("Firebase 中找不到 quizData 節點");
-                    document.getElementById('question-text').innerText = "題目載入失敗，請確認資料庫。";
-                }
-            }).catch((error) => {
+                if (!response.ok) throw new Error('無法獲取題目');
+                const tempArray = await response.json();
+                quizData = shuffleArray(tempArray);
+                loadQuestion();
+            } catch (error) {
                 console.error("讀取題目發生錯誤:", error);
-            });
+                document.getElementById('question-text').innerText = "題目載入失敗，請確認後端伺服器是否啟動。";
+            }
         }
 
 
-        // ====== 3. 連署計數器邏輯 ======
-        const pledgeRef = ref(db, 'pledge_total');
+        // ====== 3. 連署計數器邏輯 (完全移除 SDK，改由 API 驅動) ======
         const pledgeBtn = document.getElementById('pledgeBtn');
 
         function checkPledgeStatus() {
@@ -1467,39 +1441,63 @@
             }
         }
 
-        // 監聽雲端連署總數
-        onValue(pledgeRef, (snapshot) => {
-            const data = snapshot.val() || 0;
-            const countEl = document.getElementById('count');
-            if (countEl) countEl.innerText = data.toLocaleString();
-        });
+        // 🟢 修改後的連署總數讀取：
+        async function fetchPledgeCount() {
+            try {
+                // 🔥 關鍵修正：同樣在這裡加上 ngrok 的通行證 headers！
+                const response = await fetch(`${MY_NGROK_URL}/api/pledge/count`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                });
+                const data = await response.json();
+                const countEl = document.getElementById('count');
+                if (countEl && data.count !== undefined) {
+                    countEl.innerText = data.count.toLocaleString();
+                }
+            } catch (error) {
+                console.error("無法獲取連署人數:", error);
+            }
+        }
 
-        // 掛載連署點擊事件到 window 上，供 HTML 的 onclick="incrementCounter()" 呼叫
+        // 掛載連署點擊事件到 window 上
         window.incrementCounter = function () {
             if (localStorage.getItem('has_pledged') === 'true') return;
 
             localStorage.setItem('has_pledged', 'true');
             checkPledgeStatus();
 
-            runTransaction(pledgeRef, (currentCount) => {
-                return (currentCount || 0) + 1;
-            }).catch((error) => {
-                console.error("連署失敗：", error);
-                localStorage.removeItem('has_pledged');
-                if (pledgeBtn) {
-                    pledgeBtn.disabled = false;
-                    pledgeBtn.innerText = '我承諾';
-                    pledgeBtn.style.opacity = '1';
-                    pledgeBtn.style.cursor = 'pointer';
-                }
-            });
+            // 🟢 發送 POST 請求到後端讓連署計數 + 1
+            fetch(`${MY_NGROK_URL}/api/pledge/increment`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const countEl = document.getElementById('count');
+                        if (countEl) countEl.innerText = data.count.toLocaleString();
+                    }
+                })
+                .catch((error) => {
+                    console.error("連署失敗：", error);
+                    localStorage.removeItem('has_pledged');
+                    if (pledgeBtn) {
+                        pledgeBtn.disabled = false;
+                        pledgeBtn.innerText = '我承諾';
+                        pledgeBtn.style.opacity = '1';
+                        pledgeBtn.style.cursor = 'pointer';
+                    }
+                });
         }
 
         // ====== 4. 網頁初始化載入 ======
         checkPledgeStatus();
-        fetchQuizData();     // 從 Firebase 撈題目
+        fetchPledgeCount(); // 🟢 網頁打開時，先向後端問連署總數
+        fetchQuizData();    // 🟢 接著向後端拿小學堂題目
+
+        // 🆕 每 5 秒自動跟後端同步一次連署總數，模擬原本的即時監聽效果
+        setInterval(fetchPledgeCount, 5000);
+
         if (typeof showPage === 'function') {
-            showPage('home'); // 如果你有原先的換頁邏輯就保留
+            showPage('home');
         }
     </script>
     </div>
