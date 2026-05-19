@@ -1087,7 +1087,7 @@
             const loadingId = appendMessage('正在為您規劃惜食食譜中...', 'ai-message');
 
             try {
-                const response = await fetch('https://percolate-remission-hardy.ngrok-free.dev/api/recipe', {
+                const response = await fetch('https://web-programming-final-project-ver2.onrender.com/api/recipe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ingredients: text })
@@ -1308,7 +1308,7 @@
         // 🟢 徹底移除 Firebase 所有前端 SDK 引用，前端金鑰 0 殘留！
 
         // ====== 📌 設定妳的 ngrok 永久網址變數 ======
-        const MY_NGROK_URL = 'https://percolate-remission-hardy.ngrok-free.dev';
+        const MY_NGROK_URL = 'https://web-programming-final-project-ver2.onrender.com';
 
         // ====== 題目測驗變數與邏輯 ======
         let quizData = [];
