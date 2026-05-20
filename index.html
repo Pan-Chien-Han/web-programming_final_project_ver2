@@ -20,6 +20,9 @@
             --error-color: #e76f51;
         }
 
+
+
+
         * {
             margin: 0;
             padding: 0;
@@ -27,12 +30,18 @@
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
         }
 
+
+
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.7;
             padding-top: 20px;
         }
+
+
+
 
         /* 頂部大圖樣式 */
         .hero-banner {
@@ -46,12 +55,18 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
+
+
+
         .hero-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             /* 確保圖片填滿且不變形 */
         }
+
+
+
 
         .hero-overlay {
             position: absolute;
@@ -68,15 +83,27 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
+
+
+
         .hero-overlay h1 {
             /* 使用思源宋體，備用字體設為 serif */
             font-family: 'Noto Serif TC', serif;
 
+
+
+
             /* 設定為最粗的等級 (Black) */
             font-weight: 900;
 
+
+
+
             /* 字體加大 */
             font-size: 5rem;
+
+
+
 
             /* 讓字體更有質感的微調 */
             letter-spacing: 0.1em;
@@ -85,25 +112,40 @@
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
             /* 增加層次感 */
 
+
+
+
             /* 置中對齊 */
             text-align: center;
             margin: 0;
         }
+
+
+
 
         .hero-overlay p {
             font-size: 1.2rem;
             opacity: 0.9;
         }
 
+
+
+
         @media (max-width: 600px) {
             .hero-banner {
                 height: 250px;
             }
 
+
+
+
             .hero-overlay h1 {
                 font-size: 1.8rem;
             }
         }
+
+
+
 
         /* 內容區塊控制 */
         .page-content {
@@ -114,9 +156,15 @@
             min-height: 75vh;
         }
 
+
+
+
         .page-content.active {
             display: block;
         }
+
+
+
 
         /* 返回按鈕 */
         .btn-back {
@@ -131,10 +179,16 @@
             transition: 0.3s;
         }
 
+
+
+
         .btn-back:hover {
             background: var(--primary-color);
             color: white;
         }
+
+
+
 
         /* 首頁資訊樣式 */
         .news-placeholder {
@@ -147,6 +201,9 @@
             margin-bottom: 40px;
         }
 
+
+
+
         /* 功能引導按鈕 */
         .cta-container {
             display: flex;
@@ -155,6 +212,9 @@
             margin: 40px 0;
             flex-wrap: wrap;
         }
+
+
+
 
         .btn-cta {
             background-color: var(--primary-color);
@@ -171,21 +231,33 @@
             box-shadow: 0 4px 15px rgba(140, 156, 117, 0.2);
         }
 
+
+
+
         .btn-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(140, 156, 117, 0.4);
             filter: brightness(1.05);
         }
 
+
+
+
         .btn-cta.secondary {
             background-color: var(--accent-color);
             box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2);
         }
 
+
+
+
         .btn-cta.quiz-theme {
             background-color: var(--quiz-color);
             box-shadow: 0 4px 15px rgba(107, 142, 35, 0.2);
         }
+
+
+
 
         /* 計算機樣式優化 */
         .calc-wrapper {
@@ -197,9 +269,15 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
         }
 
+
+
+
         .calc-form {
             padding: 40px;
         }
+
+
+
 
         .calc-visual {
             background-color: #f1f3e8;
@@ -211,15 +289,24 @@
             align-items: center;
         }
 
+
+
+
         .input-group {
             margin-bottom: 25px;
         }
+
+
+
 
         .input-group label {
             display: block;
             margin-bottom: 10px;
             font-weight: 600;
         }
+
+
+
 
         /* 複選框排版 */
         .checkbox-group {
@@ -232,6 +319,9 @@
             border: 1.5px solid #eee;
         }
 
+
+
+
         .checkbox-item {
             display: flex;
             align-items: center;
@@ -240,12 +330,18 @@
             font-size: 0.95rem;
         }
 
+
+
+
         .checkbox-item input {
             width: 18px;
             height: 18px;
             accent-color: var(--primary-color);
             cursor: pointer;
         }
+
+
+
 
         input[type="number"] {
             width: 100%;
@@ -255,10 +351,16 @@
             outline: none;
         }
 
+
+
+
         .slider {
             width: 100%;
             accent-color: var(--primary-color);
         }
+
+
+
 
         .btn-calc {
             background-color: var(--primary-color);
@@ -272,6 +374,9 @@
             margin-top: 10px;
         }
 
+
+
+
         .formula-box {
             background: #fdfdfd;
             border-left: 5px solid var(--accent-color);
@@ -280,6 +385,9 @@
             font-size: 0.9rem;
             display: none;
         }
+
+
+
 
         .esg-note {
             font-size: 0.85rem;
@@ -291,6 +399,9 @@
             border-left: 3px solid var(--primary-color);
         }
 
+
+
+
         /* 圖形天平樣式優化 */
         .balance-container {
             width: 100%;
@@ -298,6 +409,9 @@
             margin-bottom: 30px;
             position: relative;
         }
+
+
+
 
         /* 天平支架 */
         .balance-stand {
@@ -309,6 +423,9 @@
             border-radius: 6px 6px 0 0;
         }
 
+
+
+
         .balance-base {
             width: 100px;
             height: 12px;
@@ -319,6 +436,9 @@
             transform: translateX(-50%);
             border-radius: 4px;
         }
+
+
+
 
         /* 天平橫樑（會旋轉） */
         .balance-beam {
@@ -335,6 +455,9 @@
             justify-content: space-between;
         }
 
+
+
+
         /* 左右秤盤掛線與托盤結構 */
         .plate-wrapper {
             position: absolute;
@@ -346,21 +469,33 @@
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
+
+
+
         .plate-wrapper.left {
             left: -5px;
             transform-origin: top center;
         }
+
+
+
 
         .plate-wrapper.right {
             right: -5px;
             transform-origin: top center;
         }
 
+
+
+
         .string {
             width: 2px;
             height: 50px;
             background: #bdc3c7;
         }
+
+
+
 
         .plate {
             width: 90px;
@@ -369,6 +504,9 @@
             border-radius: 0 0 10px 10px;
             position: relative;
         }
+
+
+
 
         /* 托盤上的圖標容器 */
         .icon-box {
@@ -385,6 +523,9 @@
             line-height: 1;
         }
 
+
+
+
         /* 惜食小學堂樣式 - 四選一優化 */
         .quiz-container {
             background: var(--white);
@@ -395,6 +536,9 @@
             margin: 20px auto;
         }
 
+
+
+
         .quiz-question {
             font-size: 1.25rem;
             font-weight: 600;
@@ -403,12 +547,18 @@
             text-align: left;
         }
 
+
+
+
         .quiz-options-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
             margin-bottom: 20px;
         }
+
+
+
 
         .btn-option {
             text-align: left;
@@ -421,10 +571,16 @@
             font-size: 1rem;
         }
 
+
+
+
         .btn-option:hover:not([disabled]) {
             background-color: #f9fdf4;
             border-color: var(--primary-color);
         }
+
+
+
 
         .btn-option.correct {
             background-color: #e9f5db;
@@ -433,11 +589,17 @@
             font-weight: bold;
         }
 
+
+
+
         .btn-option.wrong {
             background-color: #fde2e2;
             border-color: var(--error-color);
             color: #7a2a2a;
         }
+
+
+
 
         .quiz-feedback {
             margin-top: 20px;
@@ -448,15 +610,24 @@
             text-align: left;
         }
 
+
+
+
         .quiz-feedback.success {
             background-color: #f1f8e9;
             border: 1px solid var(--primary-color);
         }
 
+
+
+
         .quiz-feedback.error {
             background-color: #fff5f5;
             border: 1px solid var(--error-color);
         }
+
+
+
 
         /* 天平動畫 */
         .balance-icon {
@@ -467,6 +638,9 @@
             margin-bottom: 20px;
             transition: transform 0.5s ease;
         }
+
+
+
 
         .balance-icon::after {
             content: "";
@@ -479,6 +653,9 @@
             transform: translateX(-2px);
         }
 
+
+
+
         /* 連署區塊 */
         .petition-section {
             text-align: center;
@@ -488,6 +665,9 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
             margin-top: 50px;
         }
+
+
+
 
         .btn-promise {
             margin-top: 20px;
@@ -502,10 +682,16 @@
             font-size: 1.5rem;
         }
 
+
+
+
         .btn-promise:active {
             transform: translate(5px, 5px);
             box-shadow: 5px 5px 0px var(--accent-color);
         }
+
+
+
 
         .count-num {
             color: var(--accent-color);
@@ -514,6 +700,9 @@
             margin: 0 5px;
         }
 
+
+
+
         footer {
             text-align: center;
             padding: 40px;
@@ -521,21 +710,33 @@
             color: #aaa;
         }
 
+
+
+
         @media (max-width: 850px) {
             .calc-wrapper {
                 grid-template-columns: 1fr;
             }
+
+
+
 
             .cta-container {
                 flex-direction: column;
                 align-items: center;
             }
 
+
+
+
             .btn-cta {
                 width: 100%;
                 justify-content: center;
             }
         }
+
+
+
 
         /* 地圖佔位 */
         body {
@@ -545,10 +746,16 @@
             background-color: #f4f4f4;
         }
 
+
+
+
         #map {
             height: 65vh;
             width: 100%;
         }
+
+
+
 
         /* 標題區塊 */
         .header {
@@ -556,6 +763,9 @@
             background: #fff;
             border-bottom: 2px solid #ddd;
         }
+
+
+
 
         /* 解除地圖外殼的白框、陰影與留白 */
         #map-page.page-content {
@@ -573,24 +783,39 @@
             /* 允許寬度 100% 撐開 */
         }
 
+
+
+
         /* 讓地圖上方的標題與返回按鈕維持原本乾淨的置中排版 */
         #map-page .header {
             background: transparent;
             border-bottom: none;
 
+
+
+
             /* 核心調整：第一個數字 20px 是上下距離，第二個數字 80px 是左邊的距離 */
             /* 如果覺得不夠右邊，可以把 80px 改成 100px 或 120px 喔！ */
             padding: 20px 80px !important;
 
+
+
+
             box-sizing: border-box;
             width: 100%;
         }
+
+
+
 
         h1 {
             margin: 0;
             color: #333;
             font-size: 24px;
         }
+
+
+
 
         /* 資訊面板樣式 (圖片中的黃色視窗效果) */
         .info {
@@ -604,20 +829,32 @@
             min-width: 150px;
         }
 
+
+
+
         .info h4 {
             margin: 0 0 5px;
             color: #777;
         }
+
+
+
 
         .trend-up {
             color: #d9534f;
             font-weight: bold;
         }
 
+
+
+
         .trend-down {
             color: #5cb85c;
             font-weight: bold;
         }
+
+
+
 
         /* 圖例樣式 */
         .legend {
@@ -629,6 +866,9 @@
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
+
+
+
         .legend i {
             width: 18px;
             height: 18px;
@@ -639,7 +879,13 @@
     </style>
 </head>
 
+
+
+
 <body>
+
+
+
 
     <!-- 首頁 -->
     <section id="home" class="page-content active">
@@ -656,72 +902,119 @@
                 迎戰極端氣候！「勝食」數位革命全面啟動
             </h2>
 
+
             <div class="news-placeholder"
                 style="text-align: left; font-size: 16px; line-height: 1.8; color: #333; font-family: sans-serif;">
 
+
+                <!-- 一開始會顯示的摘要內容 -->
                 <p
                     style="font-size: 18px; font-weight: 600; color: #111; margin-top: -30px; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
                     以資訊科技實踐 SDG 2 農業與糧食韌性
                 </p>
 
+
                 <p style="margin-bottom: 10px;">
-                    2026年，全球農業正面臨氣候變遷的嚴峻考驗。暴雨、高溫與乾旱導致產量大幅波動，威脅著人類的糧食安全。然而，氣候危機的解方不僅在於田間的耕作技術，更在於大眾的認知普及與後端的分配優化。
+                    2026年，全球農業正面臨氣候變遷的嚴峻考驗。暴雨、高溫與乾旱導致產量大幅波動，威脅著人類的糧食安全。
                 </p>
 
-                <p style="margin-bottom: 30px;">
+
+                <p style="margin-bottom: 20px;">
                     為此，本團隊開發 <span style="color: #2e7d32; font-weight: 700;">「糧心大數據」</span>
-                    平台，運用數位力量解決糧食系統中資訊不對稱與剩食的荒謬矛盾，具體實踐 SDG 2（消除飢餓、達成糧食安全、促進永續農業） 的核心願景。
-                </p>
-
-                <p
-                    style="font-size: 18px; font-weight: 600; color: #111; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
-                    核心應用：四大數位科技翻轉糧食危機
-                </p>
-
-                <p style="margin-bottom: 10px;">
-                    為了突破大眾對糧食危機認知與日常脫節的困境，本平台由四大數位應用驅動，將科技轉化為具備感知價值的互動體驗：
-                </p>
-
-                <p style="margin-bottom: 10px;">
-                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">感官覺醒 ｜ 全球飢餓地圖</span>
-                    <span
-                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
-                        SDG 2.1 消除飢餓</span><br>
-                    利用地理資訊系統（GIS）概念，將枯燥的聯合國數據轉化為色彩感官體驗。透過網頁前端技術，以顏色深淺直觀呈現各國營養不良的嚴重程度，讓使用者一眼看清氣候災變下的糧食危機，喚起公民意識。
-                </p>
-
-                <p style="margin-bottom: 10px;">
-                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">情感共鳴 ｜ 剩食計算機</span>
-                    <span
-                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
-                        SDG 2.2 翻轉分配矛盾</span><br>
-                    面對「全球逾八億人遭受長期飢餓，消費端卻有三分之一糧食遭到浪費」的極端悖論，平台透過參數化表單與運算邏輯，將使用者日常浪費的卡路里，即時轉譯為「飢餓地區孩童的一餐」，並輔以天平傾斜的動態視覺特效，以直觀的心理衝擊引導大眾正視分配不均的現實。
-                </p>
-
-                <p style="margin-bottom: 10px;">
-                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">知識扎根 ｜ 惜食小學堂</span>
-                    <span
-                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
-                        SDG 2.4 促進永續農業認知</span><br>
-                    為了提升消費端對永續生產的認同，本團隊設計了遊戲化問答。讓使用者在互動中，深入了解氣候變遷對農業產量的衝擊、低碳農產品標籤及草生栽培等土地友善耕作知識，讓永續教育在消費端扎根。
+                    平台，運用數位力量解決糧食系統中資訊不對稱與剩食的荒謬矛盾。
                 </p>
 
                 <p style="margin-bottom: 30px;">
-                    <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">端點實踐 ｜ AI 惜食食譜產生器</span>
-                    <span
-                        style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">對應
-                        SDG 2.c 穩定食物市場與端點減廢</span><br>
-                    平台更具備即時落實減廢的行動力。透過串接大型語言模型 API，使用者只需輸入冰箱殘餘食材，系統便能即時生成惜食料理步驟，直接破解家庭端剩食痛點，將「剩食」完美轉化為「勝食」。
+                    氣候危機的解方不僅在於田間的耕作技術，更在於大眾的認知普及與後端的分配優化。
+                    本平台具體實踐 SDG 2（消除飢餓、達成糧食安全、促進永續農業）的核心願景。
                 </p>
 
-                <p
-                    style="font-size: 18px; font-weight: 600; color: #111; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
-                    運用科技築起更公平的糧食安全防線
-                </p>
 
-                <p style="margin-bottom: -25px;">
-                    永續農業與糧食革命，不再只是農夫的責任。本團隊透過此資訊平台，串聯全球數據與大眾的日常餐桌，減少無謂的浪費，將資源精準導向需要的地方。運用數位力量築起更穩固、更公平且更具氣候韌性的糧食安全防線。
-                </p>
+
+
+                <!-- 展開按鈕 -->
+                <button id="readMoreBtn" onclick="toggleMoreInfo()" style="
+                display: block;
+                margin: 25px auto;
+                padding: 12px 28px;
+                border: none;
+                border-radius: 30px;
+                background-color: #8c9c75;
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(140, 156, 117, 0.25);
+            ">
+                    閱讀詳細資料
+                </button>
+
+
+                <!-- 預設隱藏的詳細內容 -->
+                <div id="moreInfo" style="display: none;">
+
+
+                    <p
+                        style="font-size: 18px; font-weight: 600; color: #111; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+                        核心應用：四大數位科技翻轉糧食危機
+                    </p>
+
+
+                    <p style="margin-bottom: 10px;">
+                        為了突破大眾對糧食危機認知與日常脫節的困境，本平台由四大數位應用驅動，將科技轉化為具備感知價值的互動體驗：
+                    </p>
+
+
+                    <p style="margin-bottom: 10px;">
+                        <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">感官覺醒 ｜ 全球飢餓地圖</span>
+                        <span
+                            style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">
+                            對應 SDG 2.1 消除飢餓
+                        </span><br>
+                        利用地理資訊系統（GIS）概念，將枯燥的聯合國數據轉化為色彩感官體驗。透過網頁前端技術，以顏色深淺直觀呈現各國營養不良的嚴重程度。
+                    </p>
+
+
+                    <p style="margin-bottom: 10px;">
+                        <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">情感共鳴 ｜ 剩食計算機</span>
+                        <span
+                            style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">
+                            對應 SDG 2.2 翻轉分配矛盾
+                        </span><br>
+                        平台透過參數化表單與運算邏輯，將使用者日常浪費的卡路里，即時轉譯為「飢餓地區孩童的一餐」。
+                    </p>
+
+
+                    <p style="margin-bottom: 10px;">
+                        <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">知識扎根 ｜ 惜食小學堂</span>
+                        <span
+                            style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">
+                            對應 SDG 2.4 促進永續農業認知
+                        </span><br>
+                        本團隊設計遊戲化問答，讓使用者在互動中了解氣候變遷、低碳農產品標籤及土地友善耕作知識。
+                    </p>
+
+
+                    <p style="margin-bottom: 30px;">
+                        <span style="color: #2e7d32; font-weight: 700; font-size: 17px;">端點實踐 ｜ AI 惜食食譜產生器</span>
+                        <span
+                            style="color: #e65100; background-color: #fff3e0; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 600; margin-left: 8px;">
+                            對應 SDG 2.c 穩定食物市場與端點減廢
+                        </span><br>
+                        使用者只需輸入冰箱殘餘食材，系統便能即時生成惜食料理步驟，將「剩食」轉化為「勝食」。
+                    </p>
+
+
+                    <p
+                        style="font-size: 18px; font-weight: 600; color: #111; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+                        運用科技築起更公平的糧食安全防線
+                    </p>
+
+
+                    <p style="margin-bottom: -25px;">
+                        永續農業與糧食革命，不再只是農夫的責任。本團隊透過此資訊平台，串聯全球數據與大眾的日常餐桌，減少無謂的浪費，將資源精準導向需要的地方。
+                    </p>
+                </div>
             </div>
 
 
@@ -741,18 +1034,30 @@
             </div>
         </div>
 
+
+
+
         <div class="petition-section">
             <h2>微型連署</h2>
             <p>您的每一次點擊，都是填滿空碗的一份希望。</p>
 
+
+
+
             <!-- 1. 這裡幫按鈕加了 id="pledgeBtn"，以便後面用 JS 控制它變灰 -->
             <button id="pledgeBtn" class="btn-promise" onclick="incrementCounter()">我承諾</button>
+
+
+
 
             <div class="counter-container" style="margin-top:20px;">
                 目前已有 <span id="count" class="count-num">0</span> 位夥伴參與
             </div>
         </div>
     </section>
+
+
+
 
     <!-- 計算機頁面 -->
     <section id="calculator" class="page-content">
@@ -761,6 +1066,9 @@
         <div class="calc-wrapper">
             <div class="calc-form">
                 <h3 style="margin-bottom:10px;">數據輸入</h3>
+
+
+
 
                 <div class="input-group">
                     <label>1. 食物類別 (可複選)</label>
@@ -784,16 +1092,25 @@
                     <div class="esg-note">💡 複選時系統會以所選類別的「平均熱量密度」來估算。</div>
                 </div>
 
+
+
+
                 <div class="input-group">
                     <label>2. 浪費比例 (<span id="ratio-text">50</span>%)</label>
                     <input type="range" id="waste-ratio" min="0" max="100" value="50" class="slider"
                         oninput="updateRatio(this.value)">
                 </div>
 
+
+
+
                 <div class="input-group">
                     <label>3. 平均一餐總重 (g)</label>
                     <input type="number" id="food-weight" placeholder="例如：500" min="0">
                 </div>
+
+
+
 
                 <div class="esg-note"
                     style="background:#fff9f2; border-left-color: var(--accent-color); margin-bottom: 15px;">
@@ -801,12 +1118,21 @@
                     聯合國糧農組織預設飢餓地區兒童維持生命一餐所需基本熱量約為 <strong>400 kcal</strong>。
                 </div>
 
+
+
+
                 <button class="btn-calc" onclick="runCalc()">立即計算</button>
+
+
+
 
                 <div id="formula-display" class="formula-box">
                     <span id="process-text"></span>
                 </div>
             </div>
+
+
+
 
             <div class="calc-visual">
                 <div class="balance-container">
@@ -835,11 +1161,17 @@
         </div>
     </section>
 
+
+
+
     <!-- 惜食小學堂頁面 -->
     <section id="quiz" class="page-content">
         <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
         <h1 style="text-align:center; color: var(--primary-color); margin-bottom:10px;">惜食小學堂</h1>
         <p style="text-align:center; margin-bottom:30px; color:#888;" id="quiz-progress">第 1 / 15 題</p>
+
+
+
 
         <div class="quiz-container">
             <div id="quiz-box">
@@ -854,8 +1186,14 @@
         </div>
     </section>
 
+
+
+
     <!-- 地圖頁面 -->
     <div id="map-page" class="page-content" style="display: none;">
+
+
+
 
         <div class="header">
             <button class="btn-back" onclick="showPage('home')">← 返回首頁</button>
@@ -863,10 +1201,22 @@
             <p>點擊地圖區域，查看各國營養不良人口比例與飢餓指數</p>
         </div>
 
+
+
+
         <div id="map" style="height: 70vh; width: 100%;"></div>
+
+
+
 
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+
+
+
+
 
 
     <script>
@@ -875,10 +1225,16 @@
             // 1. 隱藏所有帶有 .page-content 的頁面
             document.querySelectorAll('.page-content').forEach(p => p.style.display = 'none');
 
+
+
+
             // 2. 顯示當前點擊的目標頁面
             const target = document.getElementById(pageId);
             if (target) target.style.display = 'block';
             window.scrollTo(0, 0);
+
+
+
 
             // 3. 【核心修正】如果使用者點進地圖頁，強迫原本隱藏的地圖重新整理尺寸，解決全白或破圖問題
             if (pageId === 'map-page' && typeof map !== 'undefined' && map !== null) {
@@ -889,24 +1245,56 @@
             }
         }
 
+
+
+        function toggleMoreInfo() {
+            const moreInfo = document.getElementById('moreInfo');
+            const btn = document.getElementById('readMoreBtn');
+
+
+            if (moreInfo.style.display === 'none') {
+                moreInfo.style.display = 'block';
+                btn.innerText = '收起詳細資料';
+            } else {
+                moreInfo.style.display = 'none';
+                btn.innerText = '閱讀詳細資料';
+            }
+        }
+
+
         // --- 計算機邏輯 ---
         function updateRatio(val) { document.getElementById('ratio-text').innerText = val; }
+
+
+
 
         function runCalc() {
             const checkboxes = document.querySelectorAll('input[name="food-type"]:checked');
             const ratio = parseFloat(document.getElementById('waste-ratio').value) / 100;
             const weight = parseFloat(document.getElementById('food-weight').value);
 
+
+
+
             if (checkboxes.length === 0) { alert("請至少勾選一個食物類別！"); return; }
             if (isNaN(weight) || weight <= 0) { alert("請輸入正確的食物總重！"); return; }
+
+
+
 
             let sumDensity = 0;
             checkboxes.forEach(cb => { sumDensity += parseFloat(cb.value); });
             const avgDensity = sumDensity / checkboxes.length;
 
+
+
+
             const kcal = (weight * ratio * avgDensity).toFixed(1);
             const childMealCalories = 400;
             const childrenCount = (kcal / childMealCalories).toFixed(1);
+
+
+
 
             document.getElementById('formula-display').style.display = 'block';
             document.getElementById('process-text').innerHTML = `
@@ -914,17 +1302,29 @@
                 食物重量 (${weight}g) × 浪費比例 (${(ratio * 100)}%) × 平均密度 (${avgDensity.toFixed(2)} kcal/g) = <strong>${kcal} kcal</strong>
             `;
 
+
+
+
             // 💥 關鍵修改：讓天平永遠偏向左邊 (角度限制在 +15度 到 +45度 之間)
             // 即使 ratio 是 0 (沒浪費)，也依然傾斜 15 度，代表隱形資源債
             const angle = -15 - (ratio * 30);
+
+
+
 
             const beam = document.getElementById('balance-beam');
             const leftPlate = document.getElementById('left-plate');
             const rightPlate = document.getElementById('right-plate');
 
+
+
+
             beam.style.transform = `rotate(${angle}deg)`;
             leftPlate.style.transform = `rotate(${-angle}deg)`;
             rightPlate.style.transform = `rotate(${-angle}deg)`;
+
+
+
 
             document.getElementById('result-msg').innerHTML = `
                 你的一餐浪費了 <span style="font-size:1.4rem; color:#e67e22; font-weight:900;">${kcal}</span> 大卡<br>
@@ -933,6 +1333,9 @@
                 </span>
             `;
         }
+
+
+
 
         // ==========================================
         // 🚀 結合版：由網頁內建按鈕觸發的 AI 對話框
@@ -955,28 +1358,31 @@
             top: 50% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
-            
+           
             /* 🔥 讓它優雅地浮動在畫面偏右下的位置 */
             bottom: 30px !important;      
-            right: 30px !important;       
-            
-            z-index: 999999999 !important; 
-            pointer-events: auto !important; 
+            right: 30px !important;      
+           
+            z-index: 999999999 !important;
+            pointer-events: auto !important;
             user-select: text !important;
             font-family: sans-serif !important;
         }
-        
+       
         /* 🟢 開關動畫輔助樣式 */
         .chat-container.active {
             display: flex !important; /* 點擊後改為 flex 顯示 */
         }
 
+
+
+
         /* 🟢 內部元件樣式 */
-        .chat-header { 
-            background-color: #708a69 !important; 
-            color: white !important; 
-            padding: 12px !important; 
-            text-align: center !important; 
+        .chat-header {
+            background-color: #708a69 !important;
+            color: white !important;
+            padding: 12px !important;
+            text-align: center !important;
             position: relative !important;
         }
         /* 內建關閉小叉叉 */
@@ -989,7 +1395,7 @@
             opacity: 0.8 !important;
         }
         .chat-close-btn:hover { opacity: 1 !important; }
-        
+       
         .chat-box { flex: 1 !important; padding: 15px !important; overflow-y: auto !important; display: flex !important; flex-direction: column !important; gap: 12px !important; background-color: #f9f9f9 !important; }
         .message { max-width: 85% !important; padding: 8px 12px !important; border-radius: 12px !important; font-size: 0.9rem !important; line-height: 1.4 !important; word-wrap: break-word !important; }
         .ai-message { background-color: #e8f5e9 !important; color: #2e7d32 !important; align-self: flex-start !important; border-top-left-radius: 2px !important; }
@@ -999,6 +1405,9 @@
         .chat-btn { background-color: #8fa887 !important; color: white !important; border: none !important; padding: 0 15px !important; margin-left: 8px !important; border-radius: 20px !important; cursor: pointer !important; font-size: 0.9rem !important; }
     `;
             document.head.appendChild(style);
+
+
+
 
             // 2. 注入對話框主體（插在 body 最前面，原先的 chat-launcher-btn 已經拿掉了）
             const chatDiv = document.createElement('div');
@@ -1019,15 +1428,24 @@
         </div>
     `;
 
+
+
+
             if (document.body.firstChild) {
                 document.body.insertBefore(chatDiv, document.body.firstChild);
             } else {
                 document.body.appendChild(chatDiv);
             }
 
+
+
+
             // 3. 綁定開關邏輯
             const chatContainer = document.getElementById('chatContainer');
             const aiRecipeBtn = document.getElementById('aiRecipeBtn');
+
+
+
 
             // 💥 連接新按鈕：點擊排版區的「AI 惜食食譜」按鈕，展開或收合對話框
             if (aiRecipeBtn) {
@@ -1040,11 +1458,17 @@
                 });
             }
 
+
+
+
             // 點擊對話框右上角的叉叉：關閉對話框
             document.getElementById('closeChat').addEventListener('click', (e) => {
                 e.stopPropagation();
                 chatContainer.classList.remove('active');
             });
+
+
+
 
             // 4. 點擊輸入框對焦修正
             const inputEl = document.getElementById('userInput');
@@ -1055,6 +1479,9 @@
                 });
             }
 
+
+
+
             // 5. 綁定發送按鈕
             const sendBtnEl = document.getElementById('sendBtn');
             if (sendBtnEl) {
@@ -1063,6 +1490,9 @@
                     sendMessage();
                 });
             }
+
+
+
 
             if (inputEl) {
                 inputEl.addEventListener('keydown', (e) => {
@@ -1074,6 +1504,9 @@
             }
         });
 
+
+
+
         // 6. 發送訊息核心邏輯（維持在外層不變，請記得檢查裡面的 fetch 網址是否為你的永久網址）
         async function sendMessage() {
             const chatBox = document.getElementById('chatBox');
@@ -1081,10 +1514,19 @@
             const text = userInput.value.trim();
             if (!text) return;
 
+
+
+
             appendMessage(text, 'user-message');
             userInput.value = '';
 
+
+
+
             const loadingId = appendMessage('正在為您規劃惜食食譜中...', 'ai-message');
+
+
+
 
             try {
                 const response = await fetch('https://web-programming-final-project-ver2.onrender.com/api/recipe', {
@@ -1093,8 +1535,14 @@
                     body: JSON.stringify({ ingredients: text })
                 });
 
+
+
+
                 const data = await response.json();
                 document.getElementById(loadingId).remove();
+
+
+
 
                 if (data.recipe) {
                     const formattedRecipe = data.recipe.replace(/\n/g, '<br>');
@@ -1108,6 +1556,9 @@
             }
         }
 
+
+
+
         function appendMessage(text, className, isHTML = false) {
             const chatBox = document.getElementById('chatBox');
             const messageDiv = document.createElement('div');
@@ -1115,16 +1566,25 @@
             messageDiv.id = id;
             messageDiv.className = `message ${className}`;
 
+
+
+
             if (isHTML) {
                 messageDiv.innerHTML = text;
             } else {
                 messageDiv.innerText = text;
             }
 
+
+
+
             chatBox.appendChild(messageDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
             return id;
         }
+
+
+
 
         // 1. 初始化地圖 (設定中心點與縮放層級)
         var map = L.map('map', {
@@ -1133,11 +1593,17 @@
             maxBoundsViscosity: 1.0
         }).setView([20, 0], 2);
 
+
+
+
         // 2. 加入底圖 (使用較簡約的風格以突顯色彩)
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; OpenStreetMap contributors',
             noWrap: true
         }).addTo(map);
+
+
+
 
         // 3. 色階邏輯 (對應圖片中的紅、橙、黃、綠)
         function getColor(d) {
@@ -1148,15 +1614,24 @@
                             '#2E8B57'; // 綠 (安全)
         }
 
+
+
+
         // 4. 定義樣式
         function getCountryName(props) {
             return props.ADMIN || props.name || props.NAME || props.name_long;
         }
 
+
+
+
         function style(feature) {
             const geoName = getCountryName(feature.properties);
             const owidName = countryNameMap[geoName] || geoName;
             const value = hungerData[owidName];
+
+
+
 
             return {
                 fillColor: value !== undefined ? getColor(value) : '#cccccc',
@@ -1167,6 +1642,9 @@
             };
         }
 
+
+
+
         // GeoJSON 與 OWID 國家名稱對照表
         const countryNameMap = {
             "United States of America": "United States",
@@ -1174,24 +1652,39 @@
             "Viet Nam": "Vietnam"
         };
 
+
+
+
         // 匯入 OWID 真實資料 + GeoJSON 地圖資料
         var hungerData = {};
         var geojson;
 
+
+
+
         Promise.all([
             fetch('https://ourworldindata.org/grapher/prevalence-of-undernourishment.csv?v=1&csvType=full&useColumnShortNames=false')
                 .then(response => response.text()),
+
+
+
 
             fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
                 .then(response => response.json())
         ]).then(([csvText, geoData]) => {
             const rows = csvText.split('\n').slice(1);
 
+
+
+
             rows.forEach(row => {
                 const cols = row.split(',');
                 const country = cols[0];
                 const year = Number(cols[2]);
                 const value = cols[3];
+
+
+
 
                 if (value && !isNaN(year)) {
                     if (!hungerData[country] || year >= hungerData[country].year) {
@@ -1203,17 +1696,29 @@
                 }
             });
 
+
+
+
             Object.keys(hungerData).forEach(country => {
                 hungerData[country] = hungerData[country].value;
             });
 
+
+
+
             console.log("飢餓資料載入完成", hungerData);
+
+
+
 
             geojson = L.geoJson(geoData, {
                 style: style,
                 onEachFeature: onEachFeature
             }).addTo(map);
         });
+
+
+
 
         // 5. 互動功能與彈窗
         function onEachFeature(feature, layer) {
@@ -1227,24 +1732,45 @@
                     });
                 },
 
+
+
+
                 mouseout: function (e) {
                     geojson.resetStyle(e.target);
                 },
 
+
+
+
                 click: function (e) {
                     const props = e.target.feature.properties;
+
+
+
 
                     const geoName = getCountryName(props);
                     const owidName = countryNameMap[geoName] || geoName;
 
+
+
+
                     const value = hungerData[owidName];
+
+
+
 
                     const rate = value !== undefined
                         ? (value === 2.5 ? "低於 2.5" : value.toFixed(1))
                         : "無資料";
 
+
+
+
                     let level = "無官方資料";
                     let explanation = "目前資料庫沒有此國家的營養不良統計資料。";
+
+
+
 
                     if (value !== undefined) {
                         if (value > 30) {
@@ -1265,6 +1791,9 @@
                         }
                     }
 
+
+
+
                     const popupContent = `
         <div class="info">
             <h4>${geoName || "選取區域"}</h4>
@@ -1277,6 +1806,9 @@
         </div>
     `;
 
+
+
+
                     L.popup()
                         .setLatLng(e.latlng)
                         .setContent(popupContent)
@@ -1285,12 +1817,18 @@
             });
         }
 
+
+
+
         // 6. 加入圖例 (Legend)
         var legend = L.control({ position: 'bottomright' });
         legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend'),
                 grades = [0, 5, 10, 20, 30],
                 labels = ['<strong>飢餓程度</strong>'];
+
+
+
 
             for (var i = 0; i < grades.length; i++) {
                 div.innerHTML +=
@@ -1302,19 +1840,40 @@
         legend.addTo(map);
 
 
+
+
+
+
+
+
     </script>
 
-    <script type="module">
-        // 🟢 徹底移除 Firebase 所有前端 SDK 引用，前端金鑰 0 殘留！
 
-        // ====== 📌 設定妳的 ngrok 永久網址變數 ======
+
+
+    <script type="module">
+
+
+
+
+
+
+
+
+        // ====== 永久網址變數 ======
         const MY_NGROK_URL = 'https://web-programming-final-project-ver2.onrender.com';
+
+
+
 
         // ====== 題目測驗變數與邏輯 ======
         let quizData = [];
         let currentQuizIndex = 0;
         let hasAnswered = false;
         let score = 0;
+
+
+
 
         // 洗牌函數 (Fisher-Yates Shuffle)
         function shuffleArray(array) {
@@ -1325,16 +1884,28 @@
             return array;
         }
 
+
+
+
         function loadQuestion() {
             if (quizData.length === 0) return;
+
+
+
 
             hasAnswered = false;
             const qData = quizData[currentQuizIndex];
             document.getElementById('quiz-progress').innerText = `第 ${currentQuizIndex + 1} / ${quizData.length} 題`;
             document.getElementById('question-text').innerText = qData.q;
 
+
+
+
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
+
+
+
 
             qData.o.forEach((optText, index) => {
                 const btn = document.createElement('button');
@@ -1344,17 +1915,29 @@
                 optionsContainer.appendChild(btn);
             });
 
+
+
+
             document.getElementById('quiz-feedback').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
         }
+
+
+
 
         window.checkAnswer = function (selectedIndex, clickedBtn) {
             if (hasAnswered) return;
             hasAnswered = true;
 
+
+
+
             const qData = quizData[currentQuizIndex];
             const feedback = document.getElementById('quiz-feedback');
             const allBtns = document.querySelectorAll('.btn-option');
+
+
+
 
             allBtns.forEach((btn, index) => {
                 btn.disabled = true;
@@ -1362,6 +1945,9 @@
                     btn.classList.add('correct');
                 }
             });
+
+
+
 
             feedback.style.display = 'block';
             if (selectedIndex === qData.a) {
@@ -1376,12 +1962,18 @@
             document.getElementById('next-btn').style.display = 'block';
         }
 
+
+
+
         window.nextQuestion = function () {
             currentQuizIndex++;
             if (currentQuizIndex < quizData.length) {
                 loadQuestion();
             } else {
                 let feedbackText = "";
+
+
+
 
                 if (score <= 5) {
                     feedbackText = "再接再厲！食物永續的觀念稍微有點落後，多留意生活中的飲食選擇，你可以做得更好！";
@@ -1390,6 +1982,9 @@
                 } else {
                     feedbackText = "太厲害了！你擁有非常卓越的食物永續與環保觀念，簡直是守護地球的綠色模範生！";
                 }
+
+
+
 
                 document.getElementById('quiz-box').innerHTML = `
                     <div style="text-align:center; padding:20px;">
@@ -1406,15 +2001,24 @@
             }
         }
 
+
+
+
         // 🟢 修改後的小學堂撈題：
         async function fetchQuizData() {
             try {
-                // 🔥 關鍵修正：在 fetch 裡加上通行證 headers，破解 ngrok 的攔截頁！
+
+
+
+
                 const response = await fetch(`${MY_NGROK_URL}/api/quiz`, {
                     headers: {
                         'ngrok-skip-browser-warning': 'true'
                     }
                 });
+
+
+
 
                 if (!response.ok) throw new Error('無法獲取題目');
                 const tempArray = await response.json();
@@ -1427,8 +2031,17 @@
         }
 
 
+
+
+
+
+
+
         // ====== 3. 連署計數器邏輯 (完全移除 SDK，改由 API 驅動) ======
         const pledgeBtn = document.getElementById('pledgeBtn');
+
+
+
 
         function checkPledgeStatus() {
             if (localStorage.getItem('has_pledged') === 'true') {
@@ -1440,6 +2053,9 @@
                 }
             }
         }
+
+
+
 
         // 🟢 修改後的連署總數讀取：
         async function fetchPledgeCount() {
@@ -1460,12 +2076,21 @@
             }
         }
 
+
+
+
         // 掛載連署點擊事件到 window 上
         window.incrementCounter = function () {
             if (localStorage.getItem('has_pledged') === 'true') return;
 
+
+
+
             localStorage.setItem('has_pledged', 'true');
             checkPledgeStatus();
+
+
+
 
             // 🟢 發送 POST 請求到後端讓連署計數 + 1
             fetch(`${MY_NGROK_URL}/api/pledge/increment`, { method: 'POST' })
@@ -1488,13 +2113,22 @@
                 });
         }
 
+
+
+
         // ====== 4. 網頁初始化載入 ======
         checkPledgeStatus();
         fetchPledgeCount(); // 🟢 網頁打開時，先向後端問連署總數
         fetchQuizData();    // 🟢 接著向後端拿小學堂題目
 
+
+
+
         // 🆕 每 5 秒自動跟後端同步一次連署總數，模擬原本的即時監聽效果
         setInterval(fetchPledgeCount, 5000);
+
+
+
 
         if (typeof showPage === 'function') {
             showPage('home');
@@ -1502,11 +2136,17 @@
     </script>
     </div>
 
+
+
+
     <div class="chat-container">
         <div class="chat-header">
             <h3 style="margin: 0; font-size: 1.1rem;">🌱 AI 惜食食譜產生器</h3>
             <p style="margin: 3px 0 0 0; font-size: 0.75rem; opacity: 0.9;">讓我幫你的冰箱剩食變美味！</p>
         </div>
+
+
+
 
         <div class="chat-box" id="chatBox">
             <div class="message ai-message">
@@ -1514,10 +2154,16 @@
             </div>
         </div>
 
+
+
+
         <div class="input-area">
             <input type="text" id="userInput" placeholder="請輸入食材..." onkeydown="if(event.key==='Enter') sendMessage()">
             <button class="chat-btn" onclick="sendMessage()">發送</button>
         </div>
 </body>
+
+
+
 
 </html>
